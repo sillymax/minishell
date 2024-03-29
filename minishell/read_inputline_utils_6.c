@@ -6,7 +6,7 @@
 /*   By: ychng <ychng@student.42kl.edu.my>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/27 01:20:16 by ychng             #+#    #+#             */
-/*   Updated: 2024/03/29 16:13:27 by ychng            ###   ########.fr       */
+/*   Updated: 2024/03/29 16:28:46 by ychng            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,8 @@ int	validlen(char *token, int *openbrackets)
 	{
 		if (((start == token) || *openbrackets > 0) && is_leftbracket(*token))
 			(*openbrackets)++;
-		else if (((start != token) && *openbrackets > 0) && is_rightbracket(*token))
+		else if (((start != token) && *openbrackets > 0) \
+				&& is_rightbracket(*token))
 			(*openbrackets)--;
 		else if (((start == token) && is_rightbracket(*token)) \
 			|| ((start != token) && is_bracket(*token)))

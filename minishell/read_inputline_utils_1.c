@@ -6,7 +6,7 @@
 /*   By: ychng <ychng@student.42kl.edu.my>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/27 01:39:11 by ychng             #+#    #+#             */
-/*   Updated: 2024/03/29 15:40:26 by ychng            ###   ########.fr       */
+/*   Updated: 2024/03/29 16:27:59 by ychng            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,8 @@ bool	has_bracketerr(char *token, int *openbrackets)
 	{
 		if (((start == token) || *openbrackets > 0) && is_leftbracket(*token))
 			(*openbrackets)++;
-		else if (((start != token) && *openbrackets > 0) && is_rightbracket(*token))
+		else if (((start != token) && *openbrackets > 0) \
+				&& is_rightbracket(*token))
 			(*openbrackets)--;
 		else if (((start == token) && is_rightbracket(*token)) \
 			|| ((start != token) && is_bracket(*token)))
@@ -96,10 +97,7 @@ bool	has_noerror(char *input)
 		if (has_logicaloperr(token, &openlogicalops) \
 			|| has_bracketerr(token, &openbrackets) \
 			|| has_redirerr(token, &openredirs))
-		{
-			free(token);
-			return (false);
-		}
+			return (free(token), false);
 		free(token);
 		token = get_next_token(NULL, false);
 	}

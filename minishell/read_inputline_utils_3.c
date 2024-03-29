@@ -6,7 +6,7 @@
 /*   By: ychng <ychng@student.42kl.edu.my>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/29 15:18:36 by ychng             #+#    #+#             */
-/*   Updated: 2024/03/29 16:23:32 by ychng            ###   ########.fr       */
+/*   Updated: 2024/03/29 16:28:59 by ychng            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,7 @@ bool	has_openlogicalops(char *input)
 	quote_t = '\0';
 	inoperator = false;
 	while (*input)
-	{			
+	{
 		if (!escaped && !is_singlequote(quote_t) && is_backslash(*input))
 			escaped = true;
 		else if (!escaped && is_quote(*input))
