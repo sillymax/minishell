@@ -6,7 +6,7 @@
 /*   By: ychng <ychng@student.42kl.edu.my>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/20 16:55:40 by ychng             #+#    #+#             */
-/*   Updated: 2024/03/29 16:13:38 by ychng            ###   ########.fr       */
+/*   Updated: 2024/03/29 16:22:44 by ychng            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -199,23 +199,41 @@ char			*custom_strjoin(char *s1, char *s2);
 // read_inputline_utils_1.c
 bool			has_logicaloperr(char *token, int *openlogicalops);
 bool			has_bracketerr(char *token, int *openbrackets);
+bool			has_redirerr(char *token, int *openredir);
+bool			has_noerror(char *input);
 
 // read_inputline_utils_2.c
-bool			has_openquotes(char *input);
-char			*format_joininput(char *joininput);
-bool			has_openbrackets(char *input);
-bool			has_openlogicalops(char *input);
+int				redirlen(char *token);
+bool			is_notvalidname(char *token);
 
 // read_inputline_utils_3.c
-int				set_inoperator_true(bool *inoperator);
+bool			has_openquotes(char *input);
+bool			has_openbrackets(char *input);
+bool			has_openlogicalops(char *input);
+bool			has_openblock(char *input);
+
+// read_inputline_utils_4.c
 bool			is_validpos(char *start, char *input);
 int				update_open_count(char c);
+int				set_inoperator_true(bool *inoperator);
+
+// read_inputline_utils_5.c
+int				dup_stdoutfd(char *input);
+int				dup_nullfd(char *input);
+char			*trim_errorpart(char *input);
+
+// read_inputline_utils_6.c
+int				validlen(char *token, int *openbrackets);
+int				validlenredir(char *token);
+char			*extract_heredoc(char *input, int joinedlen);
+
+// read_inputline_utils_7.c
+char			*format_joininput(char *joininput);
 
 // read_inputline_helper.c
 char			*closequotes(char *input);
 char			*closebrackets(char *input);
 char			*closelogicalops(char *input);
-void			update_history(char *input);
 
 // read_inputline.c
 char			*read_inputline(void);
