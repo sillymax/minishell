@@ -6,7 +6,7 @@
 /*   By: ychng <ychng@student.42kl.edu.my>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/23 23:35:54 by ychng             #+#    #+#             */
-/*   Updated: 2024/03/30 01:39:36 by ychng            ###   ########.fr       */
+/*   Updated: 2024/03/30 01:56:32 by ychng            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -236,6 +236,17 @@ void	wait_for_forks(char **envp)
 		update_exit_status(envp, WEXITSTATUS(exit_status));
 }
 
+int	get_exitstatus(char **envp)
+{
+	while (*envp)
+	{
+		if (!ft_strncmp(*envp, "?=", 2))
+			break ;
+		envp++;
+	}
+	return (ft_atoi(*envp + 2));
+}
+
 bool	evaluate_cmd(t_tokennode *token, char ***envp)
 {
 	int				prev_pipefd[2];
@@ -254,7 +265,7 @@ bool	evaluate_cmd(t_tokennode *token, char ***envp)
 		free_subtokenlist(currcmd);
 	}
 	wait_for_forks(*envp);
-	return (true);
+	return (get_exitstatus(*envp) == 0);
 }
 
 char	*getoperator(t_treenode *node)
@@ -267,25 +278,12 @@ char	*getoperator(t_treenode *node)
 	return (currsub->subtoken);
 }
 
-int	exit_status(char **envp)
-{
-	while (*envp)
-	{
-		if (!ft_strncmp(*envp, "?=", 2))
-			break ;
-		envp++;
-	}
-	return (ft_atoi(*envp + 2));
-}
-
 bool	evaluate_tree(t_treenode *root, char ***envp)
 {
 	bool	left;
 
 	if (root == NULL)
 		return (false);
-	if ((root->left == NULL) && (root->right == NULL))
-		return (evaluate_cmd(root->token, envp));
 	left = evaluate_tree(root->left, envp);
 	if (!ft_strcmp(getoperator(root), "&&"))
 	{
@@ -298,5 +296,5 @@ bool	evaluate_tree(t_treenode *root, char ***envp)
 		if (left == NULL)
 			return (evaluate_tree(root->right, envp));
 	}
-	return (false);
+	return (evaluate_cmd(root->token, envp));
 }
