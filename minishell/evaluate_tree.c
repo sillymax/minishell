@@ -6,7 +6,7 @@
 /*   By: ychng <ychng@student.42kl.edu.my>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/23 23:35:54 by ychng             #+#    #+#             */
-/*   Updated: 2024/03/30 01:56:32 by ychng            ###   ########.fr       */
+/*   Updated: 2024/03/31 01:05:50 by ychng            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -119,6 +119,39 @@ int	run_cmd(char ***envp, t_subtokenlist *currcmd)
 	return (run_execve(*envp, currcmd));
 }
 
+t_subtokenlist	*extract_redirection(t_subtokenlist **currcmd)
+{
+	t_subtokenlist	*cmdlist;
+	t_subtokenlist	*redirlist;
+
+	cmdlist = create_subtokenlist();
+	redirlist = create_subtokenlist();
+	while ((*currcmd)->head)
+	{
+		if (is_redirection((*currcmd)->head->subtoken))
+		{
+			link_subtokenlist(pop_subtokenlist_head(*currcmd), redirlist);
+			link_subtokenlist(pop_subtokenlist_head(*currcmd), redirlist);
+		}
+		else
+			link_subtokenlist(pop_subtokenlist_head(*currcmd), cmdlist);
+	}
+	*currcmd = cmdlist;
+	return (redirlist);
+}
+
+void	manage_redirection(t_subtokenlist *redirlist)
+{
+	t_subtokennode	*current;
+
+	current = redirlist->head;
+	while (current)
+	{
+		
+		current = current->next;		
+	}	
+}
+
 void	handle_pipecmd(char ***envp, int pipefd[], int prev_pipefd[], \
 					t_subtokenlist *currcmd)
 {
@@ -136,6 +169,7 @@ void	handle_pipecmd(char ***envp, int pipefd[], int prev_pipefd[], \
 		close(pipefd[0]);
 		dup2(pipefd[1], STDOUT_FILENO);
 		close(pipefd[1]);
+		manage_redirection(extract_redirection(&currcmd));
 		exit(run_cmd(envp, currcmd));
 	}
 	else
@@ -185,7 +219,7 @@ void	handle_lastcmd(char ***envp, int prev_pipefd[], \
 	pid_t	pid;
 
 	if (prev_pipefd[0] == 0)
-		update_exit_status(*envp, run_cmd(envp, currcmd));
+		update_exit_status(*envp, run_cmd(envp, handle_redirection(currcmd)));
 	else
 	{
 		pid = create_fork();
@@ -197,7 +231,7 @@ void	handle_lastcmd(char ***envp, int prev_pipefd[], \
 				dup2(prev_pipefd[0], STDIN_FILENO);
 				close(prev_pipefd[0]);
 			}
-			exit(run_cmd(envp, currcmd));
+			exit(run_cmd(envp, handle_redirection(currcmd)));
 		}
 		else
 		{
