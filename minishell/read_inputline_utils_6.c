@@ -6,7 +6,7 @@
 /*   By: ychng <ychng@student.42kl.edu.my>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/27 01:20:16 by ychng             #+#    #+#             */
-/*   Updated: 2024/03/29 16:28:46 by ychng            ###   ########.fr       */
+/*   Updated: 2024/03/30 00:28:36 by ychng            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,6 +69,7 @@ char	*extract_heredoc(char *input, int joinedlen)
 	char	*joinedtokens;
 	char	*subtoken;
 	char	*result;
+	int		openheredoc;
 
 	joinedtokens = ft_strndup(input, joinedlen);
 	if (!joinedtokens)
@@ -77,7 +78,25 @@ char	*extract_heredoc(char *input, int joinedlen)
 		free(input);
 		exit(-1);
 	}
-	return (ft_strndup(input, joinedlen));
+	result = NULL;
+	openheredoc = 0;
+	subtoken = get_next_subtoken(joinedtokens);
+	while (subtoken)
+	{
+		if (openheredoc == 0 && is_heredoc(subtoken))
+		{
+			openheredoc++;
+			result = custom_strjoin(result, subtoken);
+		}
+		else if (openheredoc > 0)
+		{
+			openheredoc--;
+			result = custom_strjoin(result, subtoken);
+		}
+		free(subtoken);
+		subtoken = get_next_subtoken(NULL);
+	}
+	return (result);
 }
 
 // bool	empty_bracket(char *input)
