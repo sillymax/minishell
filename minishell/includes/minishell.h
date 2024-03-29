@@ -6,7 +6,7 @@
 /*   By: ychng <ychng@student.42kl.edu.my>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/20 16:55:40 by ychng             #+#    #+#             */
-/*   Updated: 2024/03/29 16:22:44 by ychng            ###   ########.fr       */
+/*   Updated: 2024/03/30 01:22:54 by ychng            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -321,7 +321,7 @@ t_treenode		*getlastnode(t_treenode *cmdlist);
 t_treenode		*build_tree(t_tokenlist *tokenlist);
 
 // evaluate_tree.c
-void			evaluate_tree(t_treenode *root, char ***envp);
+bool			evaluate_tree(t_treenode *root, char ***envp);
 
 // free_list.c
 void			free_subtokennode(t_subtokennode *subtokennode);

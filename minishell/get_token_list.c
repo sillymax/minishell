@@ -6,7 +6,7 @@
 /*   By: ychng <ychng@student.42kl.edu.my>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/27 01:32:23 by ychng             #+#    #+#             */
-/*   Updated: 2024/03/27 01:32:25 by ychng            ###   ########.fr       */
+/*   Updated: 2024/03/30 01:46:10 by ychng            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,8 @@ t_tokenlist	*get_tokenlist(char *input, char **envp)
 	t_tokennode		*tokennode;
 	char			*token;
 
+	if (input == NULL)
+		return (NULL);
 	tokenlist = create_tokenlist();
 	token = get_next_token(input, true);
 	while (token)

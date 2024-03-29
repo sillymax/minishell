@@ -6,7 +6,7 @@
 /*   By: ychng <ychng@student.42kl.edu.my>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/22 19:25:04 by ychng             #+#    #+#             */
-/*   Updated: 2024/03/27 01:13:29 by ychng            ###   ########.fr       */
+/*   Updated: 2024/03/30 01:46:41 by ychng            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ t_treenode	*build_tree(t_tokenlist *tokenlist)
 
 	cmdlist = NULL;
 	opslist = NULL;
-	while (tokenlist->head)
+	while (tokenlist && tokenlist->head)
 	{
 		firsubtok = currsubtok_in(tokenlist);
 		if (is_leftbracket(firsubtok[0]))

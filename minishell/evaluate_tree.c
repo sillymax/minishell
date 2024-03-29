@@ -6,7 +6,7 @@
 /*   By: ychng <ychng@student.42kl.edu.my>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/23 23:35:54 by ychng             #+#    #+#             */
-/*   Updated: 2024/03/23 23:40:49 by ychng            ###   ########.fr       */
+/*   Updated: 2024/03/30 01:39:36 by ychng            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -278,10 +278,25 @@ int	exit_status(char **envp)
 	return (ft_atoi(*envp + 2));
 }
 
-void	evaluate_tree(t_treenode *root, char ***envp)
+bool	evaluate_tree(t_treenode *root, char ***envp)
 {
+	bool	left;
+
 	if (root == NULL)
-		return ;
-	evaluate_tree(root->left, envp);
-	evaluate_tree(root->right, envp);
+		return (false);
+	if ((root->left == NULL) && (root->right == NULL))
+		return (evaluate_cmd(root->token, envp));
+	left = evaluate_tree(root->left, envp);
+	if (!ft_strcmp(getoperator(root), "&&"))
+	{
+		if (left == NULL)
+			return (false);
+		return (evaluate_tree(root->right, envp));
+	}
+	else if (!ft_strcmp(getoperator(root), "||"))
+	{
+		if (left == NULL)
+			return (evaluate_tree(root->right, envp));
+	}
+	return (false);
 }

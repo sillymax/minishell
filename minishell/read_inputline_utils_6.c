@@ -6,7 +6,7 @@
 /*   By: ychng <ychng@student.42kl.edu.my>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/27 01:20:16 by ychng             #+#    #+#             */
-/*   Updated: 2024/03/30 00:28:36 by ychng            ###   ########.fr       */
+/*   Updated: 2024/03/30 01:37:30 by ychng            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,7 +96,7 @@ char	*extract_heredoc(char *input, int joinedlen)
 		free(subtoken);
 		subtoken = get_next_subtoken(NULL);
 	}
-	return (result);
+	return (NULL);
 }
 
 // bool	empty_bracket(char *input)
