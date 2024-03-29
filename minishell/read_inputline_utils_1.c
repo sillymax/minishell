@@ -6,12 +6,11 @@
 /*   By: ychng <ychng@student.42kl.edu.my>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/27 01:39:11 by ychng             #+#    #+#             */
-/*   Updated: 2024/03/27 01:42:35 by ychng            ###   ########.fr       */
+/*   Updated: 2024/03/29 15:40:26 by ychng            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "includes/minishell.h"
-
 
 bool	has_logicaloperr(char *token, int *openlogicalops)
 {
@@ -30,19 +29,6 @@ bool	has_logicaloperr(char *token, int *openlogicalops)
 		(*openlogicalops)--;
 	return (false);
 }
-
-// bool	is_empty(char *start, char *token)
-// {
-// 	while (token >= start)
-// 	{
-// 		if (is_leftbracket(*token))
-// 			return (true);
-// 		if (!is_space(*token) && !is_rightbracket(*token))
-// 			return (false);
-// 		token--;
-// 	}
-// 	return (true);
-// }
 
 bool	has_bracketerr(char *token, int *openbrackets)
 {
@@ -65,4 +51,62 @@ bool	has_bracketerr(char *token, int *openbrackets)
 		token++;
 	}
 	return (false);
+}
+
+bool	has_redirerr(char *token, int *openredir)
+{
+	while (*token && !is_logicalop(token))
+	{
+		if (is_redirection_n(token) && (*openredir == 0))
+		{
+			token += redirlen(token);
+			(*openredir)++;
+			continue ;
+		}
+		else if (!is_space(*token) && (*openredir > 0))
+		{
+			if (is_notvalidname(token))
+				return (true);
+			else
+				(*openredir)--;
+		}
+		token++;
+	}
+	if (is_logicalop(token) && (*openredir > 0))
+	{
+		printf("syntax error near unexpected token `%s'\n", token);
+		return (true);
+	}
+	return (false);
+}
+
+bool	has_noerror(char *input)
+{
+	int		openlogicalops;
+	int		openbrackets;
+	int		openredirs;
+	char	*token;
+
+	openlogicalops = 0;
+	openbrackets = 0;
+	openredirs = 0;
+	token = get_next_token(input, false);
+	while (token)
+	{
+		if (has_logicaloperr(token, &openlogicalops) \
+			|| has_bracketerr(token, &openbrackets) \
+			|| has_redirerr(token, &openredirs))
+		{
+			free(token);
+			return (false);
+		}
+		free(token);
+		token = get_next_token(NULL, false);
+	}
+	if (openredirs > 0)
+	{
+		printf("syntax error near unexpected `newline'\n");
+		return (false);
+	}
+	return (true);
 }

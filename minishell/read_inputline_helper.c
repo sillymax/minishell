@@ -6,7 +6,7 @@
 /*   By: ychng <ychng@student.42kl.edu.my>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/25 01:20:21 by ychng             #+#    #+#             */
-/*   Updated: 2024/03/27 22:48:38 by ychng            ###   ########.fr       */
+/*   Updated: 2024/03/29 15:26:39 by ychng            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,19 +82,3 @@ char	*closelogicalops(char *input)
 	return (input);
 }
 
-void	update_history(char *input)
-{
-	static char	*previnput;
-
-	if (previnput && !ft_strcmp(previnput, input) && !contains_newline(input))
-		return ;
-	if (previnput != NULL)
-		free(previnput);
-	previnput = ft_strdup(input);
-	if (!previnput)
-	{
-		printf("ft_strdup failed for previnput\n");
-		exit(-1);
-	}
-	add_history(previnput);
-}
