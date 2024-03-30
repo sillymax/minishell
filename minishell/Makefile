@@ -16,7 +16,8 @@ SRCS := character_check_1.c \
 		character_check_4.c \
 		character_check_5.c \
 		character_check_6.c \
-		operator_check.c \
+		operator_check_1.c \
+		operator_check_2.c \
 		double_array_utils.c \
 		clone_envp_with_special.c \
 		quote_handling.c \
@@ -56,6 +57,12 @@ SRCS := character_check_1.c \
 		build_tree_utils_1.c \
 		build_tree_utils_2.c \
 		build_tree.c \
+		evaluate_tree_utils_1.c \
+		evaluate_tree_utils_2.c \
+		evaluate_tree_utils_3.c \
+		evaluate_tree_utils_4.c \
+		evaluate_tree_utils_5.c \
+		evaluate_tree_utils_6.c \
 		evaluate_tree.c \
 		free_list.c \
 		minishell.c

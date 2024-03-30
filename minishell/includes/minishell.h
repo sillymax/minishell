@@ -6,7 +6,7 @@
 /*   By: ychng <ychng@student.42kl.edu.my>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/20 16:55:40 by ychng             #+#    #+#             */
-/*   Updated: 2024/03/30 01:22:54 by ychng            ###   ########.fr       */
+/*   Updated: 2024/03/31 05:22:39 by ychng            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,12 +88,16 @@ bool			is_pipe(char c);
 // character_check_6.c
 bool			is_forward_slash(char c);
 
-// operator_check.c
+// operator_check_1.c
 bool			is_logicalop(char *str);
 bool			is_logicalop_n(char *str);
 bool			is_redirection(char *str);
 bool			is_redirection_n(char *str);
 bool			is_heredoc(char *str);
+
+// operator_check_2.c
+bool			is_append(char *str);
+bool			is_output(char *str);
 
 // builtins/blt_echo_utils.c
 bool			is_n_options(char *subtoken);
@@ -319,6 +323,34 @@ t_treenode		*getlastnode(t_treenode *cmdlist);
 
 // build_tree.c
 t_treenode		*build_tree(t_tokenlist *tokenlist);
+
+// evaluate_tree_utils_1.c
+void			exec_cmd(char ***envp, int prev_pipefd[], \
+						t_subtokenlist *currcmd, bool is_lastcmd);
+void			wait_for_forks(char **envp);
+int				get_exitstatus(char **envp);
+
+// evaluate_tree_utils_2.c
+void			handle_pipecmd(char ***envp, int pipefd[], int prev_pipefd[], \
+							t_subtokenlist *currcmd);
+void			handle_lastcmd(char ***envp, int prev_pipefd[], \
+							t_subtokenlist *currcmd);
+
+// evaluate_tree_utils_3.c
+pid_t			create_fork(void);
+
+// evaluate_tree_utils_4.c
+t_subtokenlist	*extract_redirection(t_subtokenlist **currcmd);
+int				get_outfilefd(t_subtokenlist *redirlist);
+void			manage_redirection(t_subtokenlist *redirlist);
+
+// evaluate_tree_utils_5.c
+int				run_cmd(char ***envp, t_subtokenlist *currcmd);
+void			update_exit_status(char **envp, int exit_status);
+bool			is_builtins(t_subtokenlist *currcmd);
+
+// evaluate_tree_utils_6.c
+int				run_execve(char **envp, t_subtokenlist *currcmd);
 
 // evaluate_tree.c
 bool			evaluate_tree(t_treenode *root, char ***envp);
