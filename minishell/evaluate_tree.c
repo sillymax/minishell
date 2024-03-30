@@ -6,7 +6,7 @@
 /*   By: ychng <ychng@student.42kl.edu.my>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/23 23:35:54 by ychng             #+#    #+#             */
-/*   Updated: 2024/03/31 03:27:21 by ychng            ###   ########.fr       */
+/*   Updated: 2024/03/31 04:21:58 by ychng            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -134,7 +134,9 @@ t_subtokenlist	*extract_redirection(t_subtokenlist **currcmd)
 			link_subtokenlist(pop_subtokenlist_head(*currcmd), redirlist);
 		}
 		else
+		{
 			link_subtokenlist(pop_subtokenlist_head(*currcmd), cmdlist);
+		}
 	}
 	*currcmd = cmdlist;
 	return (redirlist);
@@ -184,10 +186,14 @@ void	manage_redirection(t_subtokenlist *redirlist)
 void	handle_pipecmd(char ***envp, int pipefd[], int prev_pipefd[], \
 					t_subtokenlist *currcmd)
 {
-	pid_t	pid;
+	t_subtokenlist	*redirlist;
+	int				outfilefd;
+	int				origstdout;
 
-	pid = create_fork();
-	if (pid == 0)
+	redirlist = extract_redirection(&currcmd);
+	outfilefd = get_outfilefd(redirlist);
+	origstdout = dup(STDOUT_FILENO);
+	if (create_fork() == 0)
 	{
 		if (prev_pipefd[0] != 0)
 		{
@@ -195,9 +201,17 @@ void	handle_pipecmd(char ***envp, int pipefd[], int prev_pipefd[], \
 			dup2(prev_pipefd[0], STDIN_FILENO);
 			close(prev_pipefd[0]);
 		}
-		close(pipefd[0]);
-		dup2(pipefd[1], STDOUT_FILENO);
-		close(pipefd[1]);
+		if (outfilefd != 0)
+		{
+			dup2(outfilefd, STDOUT_FILENO);
+			close(outfilefd);
+		}
+		else
+		{
+			close(pipefd[0]);
+			dup2(pipefd[1], STDOUT_FILENO);
+			close(pipefd[1]);
+		}
 		manage_redirection(extract_redirection(&currcmd));
 		exit(run_cmd(envp, currcmd));
 	}
@@ -211,6 +225,9 @@ void	handle_pipecmd(char ***envp, int pipefd[], int prev_pipefd[], \
 		prev_pipefd[0] = pipefd[0];
 		prev_pipefd[1] = pipefd[1];
 	}
+	close(outfilefd);
+	dup2(origstdout, STDOUT_FILENO);
+	close(origstdout);
 }
 
 void	update_exit_status(char **envp, int exit_status)
@@ -309,9 +326,16 @@ void	handle_lastcmd(char ***envp, int prev_pipefd[], \
 {
 	t_subtokenlist	*redirlist;
 	int				outfilefd;
+	int				origstdout;
 
 	redirlist = extract_redirection(&currcmd);
 	outfilefd = get_outfilefd(redirlist);
+	origstdout = dup(STDOUT_FILENO);
+	if (outfilefd != 0)
+	{
+		dup2(outfilefd, STDOUT_FILENO);
+		close(outfilefd);
+	}
 	if (is_builtins(currcmd))
 	{
 		manage_redirection(extract_redirection(&currcmd));
@@ -339,6 +363,8 @@ void	handle_lastcmd(char ***envp, int prev_pipefd[], \
 			}
 		}
 	}
+	dup2(origstdout, STDOUT_FILENO);
+	close(origstdout);
 }
 
 void	exec_cmd(char ***envp, int prev_pipefd[], \
