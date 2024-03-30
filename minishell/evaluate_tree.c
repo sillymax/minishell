@@ -6,7 +6,7 @@
 /*   By: ychng <ychng@student.42kl.edu.my>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/23 23:35:54 by ychng             #+#    #+#             */
-/*   Updated: 2024/03/31 01:05:50 by ychng            ###   ########.fr       */
+/*   Updated: 2024/03/31 02:30:28 by ychng            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -147,7 +147,36 @@ void	manage_redirection(t_subtokenlist *redirlist)
 	current = redirlist->head;
 	while (current)
 	{
+		if (is_heredoc(current->subtoken))
+		{
+			int	tmp_fd;
 		
+			tmp_fd = open("heredoc_tmp.txt", O_WRONLY | O_CREAT | O_TRUNC, 0666);
+			if (tmp_fd == -1)
+			{
+				printf("open failed for tmp_fd\n");
+				exit(-1);
+			}
+			char	*name;
+			char	*nextline;
+		
+			name = ft_strjoin(current->next->subtoken, "\n", "");
+			nextline = get_next_line(STDIN_FILENO);
+			while (1)
+			{
+				if (!ft_strncmp(name, nextline, ft_strlen(nextline)))
+				{
+					free(nextline);
+					break ;
+				}
+				write(tmp_fd, nextline, ft_strlen(nextline));
+				free(nextline);
+				nextline = get_next_line(STDIN_FILENO);
+			}
+			free(name);
+			// dup2(tmp_fd, STDIN_FILENO);
+			// close(tmp_fd);
+		}
 		current = current->next;		
 	}	
 }
@@ -213,13 +242,38 @@ void	update_exit_status(char **envp, int exit_status)
 	}
 }
 
+bool	is_builtins(t_subtokenlist *currcmd)
+{
+	char			*cmd;
+
+	cmd = currcmd->head->subtoken;
+	if (!ft_strcmp(cmd, "echo"))
+		return (true);
+	if (!ft_strcmp(cmd, "cd"))
+		return (true);
+	if (!ft_strcmp(cmd, "pwd"))
+		return (true);
+	if (!ft_strcmp(cmd, "export"))
+		return (true);
+	if (!ft_strcmp(cmd, "unset"))
+		return (true);
+	if (!ft_strcmp(cmd, "env"))
+		return (true);
+	if (!ft_strcmp(cmd, "exit"))
+		return (true);
+	return (false);
+}
+
 void	handle_lastcmd(char ***envp, int prev_pipefd[], \
 					t_subtokenlist *currcmd)
 {
 	pid_t	pid;
 
-	if (prev_pipefd[0] == 0)
-		update_exit_status(*envp, run_cmd(envp, handle_redirection(currcmd)));
+	if (is_builtins(currcmd))
+	{
+		manage_redirection(extract_redirection(&currcmd));
+		update_exit_status(*envp, run_cmd(envp, currcmd));
+	}
 	else
 	{
 		pid = create_fork();
@@ -231,7 +285,8 @@ void	handle_lastcmd(char ***envp, int prev_pipefd[], \
 				dup2(prev_pipefd[0], STDIN_FILENO);
 				close(prev_pipefd[0]);
 			}
-			exit(run_cmd(envp, handle_redirection(currcmd)));
+			manage_redirection(extract_redirection(&currcmd));
+			exit(run_cmd(envp, currcmd));
 		}
 		else
 		{
@@ -287,6 +342,7 @@ bool	evaluate_cmd(t_tokennode *token, char ***envp)
 	t_subtokenlist	*subtokenlist;
 	t_subtokenlist	*currcmd;
 
+	ft_bzero(prev_pipefd, sizeof(int) * 2);
 	subtokenlist = token->subtokenlist;
 	while (subtokenlist->head)
 	{
