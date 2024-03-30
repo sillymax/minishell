@@ -6,7 +6,7 @@
 /*   By: ychng <ychng@student.42kl.edu.my>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/23 23:35:54 by ychng             #+#    #+#             */
-/*   Updated: 2024/03/31 02:30:28 by ychng            ###   ########.fr       */
+/*   Updated: 2024/03/31 03:27:21 by ychng            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -244,7 +244,7 @@ void	update_exit_status(char **envp, int exit_status)
 
 bool	is_builtins(t_subtokenlist *currcmd)
 {
-	char			*cmd;
+	char	*cmd;
 
 	cmd = currcmd->head->subtoken;
 	if (!ft_strcmp(cmd, "echo"))
@@ -264,11 +264,54 @@ bool	is_builtins(t_subtokenlist *currcmd)
 	return (false);
 }
 
+bool	is_append(char *str)
+{
+	return (ft_strcmp(str, ">>") == 0);
+}
+
+bool	is_output(char *str)
+{
+	return (ft_strcmp(str, ">") == 0);
+}
+
+int	get_outfilefd(t_subtokenlist *redirlist)
+{
+	t_subtokennode	*current;
+	int				lastfd;
+	char			*name;
+
+	lastfd = 0;
+	current = redirlist->head;
+	while (current)
+	{
+		if (is_append(current->subtoken))
+		{
+			name = current->next->subtoken;
+			lastfd = open(name, O_WRONLY | O_CREAT | O_APPEND, 0644);
+		}
+		else if (is_output(current->subtoken))
+		{
+			name = current->next->subtoken;
+			lastfd = open(name, O_WRONLY | O_CREAT | O_TRUNC, 0644);
+		}
+		if (lastfd == -1)
+		{
+			printf("open failed for lastfd\n");
+			exit(-1);
+		}
+		current = current->next;
+	}
+	return (lastfd);
+}
+
 void	handle_lastcmd(char ***envp, int prev_pipefd[], \
 					t_subtokenlist *currcmd)
 {
-	pid_t	pid;
+	t_subtokenlist	*redirlist;
+	int				outfilefd;
 
+	redirlist = extract_redirection(&currcmd);
+	outfilefd = get_outfilefd(redirlist);
 	if (is_builtins(currcmd))
 	{
 		manage_redirection(extract_redirection(&currcmd));
@@ -276,8 +319,7 @@ void	handle_lastcmd(char ***envp, int prev_pipefd[], \
 	}
 	else
 	{
-		pid = create_fork();
-		if (pid == 0)
+		if (create_fork() == 0)
 		{
 			if (prev_pipefd[0] != 0)
 			{
