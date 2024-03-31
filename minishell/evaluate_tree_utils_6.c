@@ -6,7 +6,7 @@
 /*   By: ychng <ychng@student.42kl.edu.my>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/31 05:13:24 by ychng             #+#    #+#             */
-/*   Updated: 2024/03/31 05:14:19 by ychng            ###   ########.fr       */
+/*   Updated: 2024/04/01 07:18:53 by ychng            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,6 +75,7 @@ int	run_execve(char **envp, t_subtokenlist *currcmd)
 	if (bin == NULL)
 	{
 		printf("%s: command not found\n", args[0]);
+		free_double_array(args);
 		return (-1);
 	}
 	execve(bin, args, envp);
