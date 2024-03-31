@@ -6,7 +6,7 @@
 /*   By: ychng <ychng@student.42kl.edu.my>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/23 23:35:54 by ychng             #+#    #+#             */
-/*   Updated: 2024/03/31 05:26:20 by ychng            ###   ########.fr       */
+/*   Updated: 2024/04/01 06:47:29 by ychng            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ static bool	evaluate_cmd(t_tokennode *token, char ***envp)
 		currcmd = create_subtokenlist();
 		while (subtokenlist->head && !is_pipe(*(subtokenlist->head->subtoken)))
 			link_subtokenlist(pop_subtokenlist_head(subtokenlist), currcmd);
-		exec_cmd(envp, prev_pipefd, currcmd, !subtokenlist->head);
+		exec_cmd(envp, prev_pipefd, &currcmd, !subtokenlist->head);
 		if (subtokenlist->head)
 			free_subtokennode(pop_subtokenlist_head(subtokenlist));
 		free_subtokenlist(currcmd);

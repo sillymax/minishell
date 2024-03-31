@@ -6,7 +6,7 @@
 /*   By: ychng <ychng@student.42kl.edu.my>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/20 16:55:40 by ychng             #+#    #+#             */
-/*   Updated: 2024/04/01 02:23:46 by ychng            ###   ########.fr       */
+/*   Updated: 2024/04/01 06:38:06 by ychng            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -329,15 +329,15 @@ void			evaluate_heredocs(t_treenode *root);
 
 // evaluate_tree_utils_1.c
 void			exec_cmd(char ***envp, int prev_pipefd[], \
-						t_subtokenlist *currcmd, bool is_lastcmd);
+						t_subtokenlist **currcmd, bool is_lastcmd);
 void			wait_for_forks(char **envp);
 int				get_exitstatus(char **envp);
 
 // evaluate_tree_utils_2.c
 void			handle_pipecmd(char ***envp, int pipefd[], int prev_pipefd[], \
-							t_subtokenlist *currcmd);
+							t_subtokenlist **currcmd);
 void			handle_lastcmd(char ***envp, int prev_pipefd[], \
-							t_subtokenlist *currcmd);
+							t_subtokenlist **currcmd);
 
 // evaluate_tree_utils_3.c
 pid_t			create_fork(void);

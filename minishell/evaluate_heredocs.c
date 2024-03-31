@@ -99,6 +99,7 @@ void	expand_heredocs(t_subtokenlist **currcmd)
 		else
 			link_subtokenlist(pop_subtokenlist_head(*currcmd), result);
 	}
+	free_subtokenlist(*currcmd);
 	*currcmd = result;
 }
 

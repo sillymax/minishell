@@ -6,7 +6,7 @@
 /*   By: ychng <ychng@student.42kl.edu.my>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/31 04:50:53 by ychng             #+#    #+#             */
-/*   Updated: 2024/03/31 05:11:13 by ychng            ###   ########.fr       */
+/*   Updated: 2024/04/01 06:49:38 by ychng            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,7 @@ t_subtokenlist	*extract_redirection(t_subtokenlist **currcmd)
 			link_subtokenlist(pop_subtokenlist_head(*currcmd), cmdlist);
 		}
 	}
+	free_subtokenlist(*currcmd);
 	*currcmd = cmdlist;
 	return (redirlist);
 }

@@ -6,14 +6,14 @@
 /*   By: ychng <ychng@student.42kl.edu.my>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/31 04:50:56 by ychng             #+#    #+#             */
-/*   Updated: 2024/03/31 05:07:19 by ychng            ###   ########.fr       */
+/*   Updated: 2024/04/01 06:37:22 by ychng            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "includes/minishell.h"
 
 void	exec_cmd(char ***envp, int prev_pipefd[], \
-			t_subtokenlist *currcmd, bool is_lastcmd)
+			t_subtokenlist **currcmd, bool is_lastcmd)
 {
 	int	pipefd[2];
 

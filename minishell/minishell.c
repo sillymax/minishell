@@ -6,7 +6,7 @@
 /*   By: ychng <ychng@student.42kl.edu.my>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/17 17:56:25 by ychng             #+#    #+#             */
-/*   Updated: 2024/04/01 05:48:37 by ychng            ###   ########.fr       */
+/*   Updated: 2024/04/01 07:10:36 by ychng            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,16 @@ void	print_treenode(t_treenode *root)
 	print_treenode(root->right);
 }
 
+void	free_tree(t_treenode *root)
+{
+	if (root == NULL)
+		return ;
+	free_tree(root->left);
+	free_tree(root->right);
+	free_tokennode(root->token);
+	free(root);
+}
+
 int	main(int argc, char **argv, char **envp)
 {
 	char		*input;
@@ -72,5 +82,6 @@ int	main(int argc, char **argv, char **envp)
 		// print_list(tokenlist);
 		free(input);
 		free_tokenlist(tokenlist);
+		free_tree(root);
 	}
 }
