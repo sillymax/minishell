@@ -6,7 +6,7 @@
 /*   By: ychng <ychng@student.42kl.edu.my>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/17 17:56:25 by ychng             #+#    #+#             */
-/*   Updated: 2024/04/01 02:25:15 by ychng            ###   ########.fr       */
+/*   Updated: 2024/04/01 05:48:37 by ychng            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,6 +56,7 @@ int	main(int argc, char **argv, char **envp)
 {
 	char		*input;
 	t_tokenlist	*tokenlist;
+	t_treenode	*root;
 
 	((void)argc, (void)argv);
 	envp = clone_envp_with_special(envp);
@@ -63,7 +64,9 @@ int	main(int argc, char **argv, char **envp)
 	{
 		input = read_inputline();
 		tokenlist = get_tokenlist(input, envp);
-		evaluate_heredocs(build_tree(tokenlist));
+		root = build_tree(tokenlist);
+		evaluate_heredocs(root);
+		evaluate_tree(root, &envp);
 		// tokenlist = infix_to_postfix(tokenlist);
 		// evaluate_postfix(&envp, tokenlist);
 		// print_list(tokenlist);

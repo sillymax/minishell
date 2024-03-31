@@ -63,7 +63,7 @@ int	count_heredocs(t_subtokenlist *currcmd)
 	current = currcmd->head;
 	while (current)
 	{
-		if (is_heredoc(currcmd->head->subtoken))
+		if (is_heredoc(current->subtoken))
 			count++;
 		current = current->next;
 	}
