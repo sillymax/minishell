@@ -6,7 +6,7 @@
 /*   By: ychng <ychng@student.42kl.edu.my>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/20 16:55:40 by ychng             #+#    #+#             */
-/*   Updated: 2024/03/31 05:22:39 by ychng            ###   ########.fr       */
+/*   Updated: 2024/04/01 02:23:46 by ychng            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -323,6 +323,9 @@ t_treenode		*getlastnode(t_treenode *cmdlist);
 
 // build_tree.c
 t_treenode		*build_tree(t_tokenlist *tokenlist);
+
+// evaluate_heredocs.
+void			evaluate_heredocs(t_treenode *root);
 
 // evaluate_tree_utils_1.c
 void			exec_cmd(char ***envp, int prev_pipefd[], \
