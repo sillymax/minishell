@@ -6,38 +6,11 @@
 /*   By: ychng <ychng@student.42kl.edu.my>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/31 04:51:00 by ychng             #+#    #+#             */
-/*   Updated: 2024/04/01 23:11:56 by ychng            ###   ########.fr       */
+/*   Updated: 2024/04/01 23:23:24 by ychng            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "includes/minishell.h"
-
-int	get_infilefd(t_subtokenlist *redirlist)
-{
-	t_subtokennode	*current;
-	char			*name;
-	int				infilefd;
-
-	infilefd = 0;
-	current = redirlist->head;
-	while (current)
-	{
-		if (is_heredoc(current->subtoken) || is_infile(current->subtoken))
-		{
-			if (infilefd != 0)
-				close(infilefd);
-			name = current->next->subtoken;
-			infilefd = open(name, O_RDONLY, 0644);
-			if (infilefd == -1)
-			{
-				printf("open failed for infilefd\n");
-				exit(-1);
-			}
-		}
-		current = current->next;
-	}
-	return (infilefd);
-}
 
 void	handle_pipecmd(char ***envp, int pipefd[], int prev_pipefd[], \
 					t_subtokenlist **currcmd)

@@ -6,7 +6,7 @@
 /*   By: ychng <ychng@student.42kl.edu.my>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/20 16:55:40 by ychng             #+#    #+#             */
-/*   Updated: 2024/04/01 23:12:38 by ychng            ###   ########.fr       */
+/*   Updated: 2024/04/01 23:24:30 by ychng            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -345,8 +345,8 @@ pid_t			create_fork(void);
 
 // evaluate_tree_utils_4.c
 t_subtokenlist	*extract_redirection(t_subtokenlist **currcmd);
+int				get_infilefd(t_subtokenlist *redirlist);
 int				get_outfilefd(t_subtokenlist *redirlist);
-void			manage_redirection(t_subtokenlist *redirlist);
 
 // evaluate_tree_utils_5.c
 int				run_cmd(char ***envp, t_subtokenlist *currcmd);
