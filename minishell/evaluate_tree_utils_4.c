@@ -6,7 +6,7 @@
 /*   By: ychng <ychng@student.42kl.edu.my>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/31 04:50:53 by ychng             #+#    #+#             */
-/*   Updated: 2024/04/01 23:27:36 by ychng            ###   ########.fr       */
+/*   Updated: 2024/04/01 23:46:30 by ychng            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@ int	get_infilefd(t_subtokenlist *redirlist)
 			if (infilefd == -1)
 			{
 				printf("%s: No such file or directory\n", name);
-				exit(-1);
+				break ;
 			}
 		}
 		current = current->next;
@@ -83,8 +83,8 @@ int	get_outfilefd(t_subtokenlist *redirlist)
 		}
 		if (lastfd == -1)
 		{
-			printf("open failed for lastfd\n");
-			exit(-1);
+			printf("%s: Is a directory\n", name);
+			break ;
 		}
 		current = current->next;
 	}

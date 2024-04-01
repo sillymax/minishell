@@ -6,7 +6,7 @@
 /*   By: ychng <ychng@student.42kl.edu.my>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/31 04:51:00 by ychng             #+#    #+#             */
-/*   Updated: 2024/04/01 23:23:24 by ychng            ###   ########.fr       */
+/*   Updated: 2024/04/01 23:50:55 by ychng            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,19 @@ void	handle_pipecmd(char ***envp, int pipefd[], int prev_pipefd[], \
 
 	redirlist = extract_redirection(currcmd);
 	infilefd = get_infilefd(redirlist);
+	if (infilefd == -1)
+	{
+		update_exit_status(*envp, 1);
+		free_subtokenlist(redirlist);
+		return ;
+	}
 	outfilefd = get_outfilefd(redirlist);
+	if (outfilefd == -1)
+	{
+		update_exit_status(*envp, 1);
+		free_subtokenlist(redirlist);
+		return ;
+	}
 	free_subtokenlist(redirlist);
 	origstdin = dup(STDIN_FILENO);
 	origstdout = dup(STDOUT_FILENO);
@@ -82,7 +94,19 @@ void	handle_lastcmd(char ***envp, int prev_pipefd[], \
 
 	redirlist = extract_redirection(currcmd);
 	infilefd = get_infilefd(redirlist);
+	if (infilefd == -1)
+	{
+		update_exit_status(*envp, 1);
+		free_subtokenlist(redirlist);
+		return ;
+	}
 	outfilefd = get_outfilefd(redirlist);
+	if (outfilefd == -1)
+	{
+		update_exit_status(*envp, 1);
+		free_subtokenlist(redirlist);
+		return ;
+	}
 	free_subtokenlist(redirlist);
 	origstdin = dup(STDIN_FILENO);
 	origstdout = dup(STDOUT_FILENO);
