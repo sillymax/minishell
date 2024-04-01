@@ -6,7 +6,7 @@
 /*   By: ychng <ychng@student.42kl.edu.my>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/20 16:55:40 by ychng             #+#    #+#             */
-/*   Updated: 2024/04/02 00:53:03 by ychng            ###   ########.fr       */
+/*   Updated: 2024/04/02 00:56:15 by ychng            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -342,7 +342,7 @@ void			handle_lastcmd(char ***envp, int prev_pipefd[], \
 
 // evaluate_tree_utils_3.c
 int				get_redirfd(char ***envp, int *infilefd, int *outfilefd, \
-							t_subtokenlist *currcmd);
+							t_subtokenlist **currcmd);
 void			restore_originalfd(int origstdin, int origstdout);
 pid_t			create_fork(void);
 
@@ -353,7 +353,7 @@ void			manage_piperedir_parent(int pipefd[], int prev_pipefd[]);
 
 // evaluate_tree_utils_5.c
 void			manage_lastcmdredir(int infilefd, int outfilefd);
-void			manage_lastcmdredir(int infilefd, int outfilefd);
+void			handle_lastcmd_child(int prev_pipefd[], int infilefd);
 void			handle_lastcmd_parent(int prev_pipefd[]);
 
 // evaluate_tree_utils_6.c

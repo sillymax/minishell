@@ -96,7 +96,7 @@ LIBFT_MAKE := $(MAKE) -C$(LIBFT_PATH)
 
 # Compiler and flags
 CC := cc
-CFLAGS := -Wall -Werror -Wextra $(if $(FSANITIZE), -fsanitize=$(FSANITIZE)) -w
+CFLAGS := -Wall -Werror -Wextra $(if $(FSANITIZE), -fsanitize=$(FSANITIZE))
 
 # Include flags, for the compiler to find additional header files
 INCLUDE_SYS_HEADERS := -I$(SYS_HEADERS_PATH)
