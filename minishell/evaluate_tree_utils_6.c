@@ -6,7 +6,7 @@
 /*   By: ychng <ychng@student.42kl.edu.my>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/31 05:13:24 by ychng             #+#    #+#             */
-/*   Updated: 2024/04/01 07:18:53 by ychng            ###   ########.fr       */
+/*   Updated: 2024/04/01 08:01:28 by ychng            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,8 @@ static char	*find_full_bin_path(char *bin, char **envp)
 	char	*path;
 	char	*full_path;
 
+	if (access(bin, F_OK) == 0)
+		return (bin);
 	i = -1;
 	while (envp[++i])
 	{
