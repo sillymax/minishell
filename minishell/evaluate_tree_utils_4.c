@@ -6,7 +6,7 @@
 /*   By: ychng <ychng@student.42kl.edu.my>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/31 04:50:53 by ychng             #+#    #+#             */
-/*   Updated: 2024/04/01 23:24:53 by ychng            ###   ########.fr       */
+/*   Updated: 2024/04/01 23:27:36 by ychng            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ int	get_infilefd(t_subtokenlist *redirlist)
 			infilefd = open(name, O_RDONLY, 0644);
 			if (infilefd == -1)
 			{
-				printf("open failed for infilefd\n");
+				printf("%s: No such file or directory\n", name);
 				exit(-1);
 			}
 		}
@@ -73,15 +73,13 @@ int	get_outfilefd(t_subtokenlist *redirlist)
 	current = redirlist->head;
 	while (current)
 	{
-		if (is_append(current->subtoken))
+		if (is_append(current->subtoken) || is_output(current->subtoken))
 		{
 			name = current->next->subtoken;
-			lastfd = open(name, O_WRONLY | O_CREAT | O_APPEND, 0644);
-		}
-		else if (is_output(current->subtoken))
-		{
-			name = current->next->subtoken;
-			lastfd = open(name, O_WRONLY | O_CREAT | O_TRUNC, 0644);
+			if (is_append(current->subtoken))
+				lastfd = open(name, O_WRONLY | O_CREAT | O_APPEND, 0644);
+			else if (is_output(current->subtoken))
+				lastfd = open(name, O_WRONLY | O_CREAT | O_TRUNC, 0644);
 		}
 		if (lastfd == -1)
 		{
