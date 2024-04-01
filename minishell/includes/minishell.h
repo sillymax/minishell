@@ -6,7 +6,7 @@
 /*   By: ychng <ychng@student.42kl.edu.my>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/20 16:55:40 by ychng             #+#    #+#             */
-/*   Updated: 2024/04/01 06:38:06 by ychng            ###   ########.fr       */
+/*   Updated: 2024/04/01 23:12:38 by ychng            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,6 +98,7 @@ bool			is_heredoc(char *str);
 // operator_check_2.c
 bool			is_append(char *str);
 bool			is_output(char *str);
+bool			is_infile(char *str);
 
 // builtins/blt_echo_utils.c
 bool			is_n_options(char *subtoken);

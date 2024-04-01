@@ -6,7 +6,7 @@
 /*   By: ychng <ychng@student.42kl.edu.my>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/31 04:51:00 by ychng             #+#    #+#             */
-/*   Updated: 2024/04/01 08:01:34 by ychng            ###   ########.fr       */
+/*   Updated: 2024/04/01 23:11:56 by ychng            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,8 +22,10 @@ int	get_infilefd(t_subtokenlist *redirlist)
 	current = redirlist->head;
 	while (current)
 	{
-		if (is_heredoc(current->subtoken))
+		if (is_heredoc(current->subtoken) || is_infile(current->subtoken))
 		{
+			if (infilefd != 0)
+				close(infilefd);
 			name = current->next->subtoken;
 			infilefd = open(name, O_RDONLY, 0644);
 			if (infilefd == -1)
