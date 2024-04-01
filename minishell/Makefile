@@ -64,6 +64,8 @@ SRCS := character_check_1.c \
 		evaluate_tree_utils_4.c \
 		evaluate_tree_utils_5.c \
 		evaluate_tree_utils_6.c \
+		evaluate_tree_utils_7.c \
+		evaluate_tree_utils_8.c \
 		evaluate_tree.c \
 		free_list.c \
 		minishell.c

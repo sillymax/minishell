@@ -6,7 +6,7 @@
 /*   By: ychng <ychng@student.42kl.edu.my>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/20 16:55:40 by ychng             #+#    #+#             */
-/*   Updated: 2024/04/01 23:24:30 by ychng            ###   ########.fr       */
+/*   Updated: 2024/04/02 00:53:03 by ychng            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -341,19 +341,32 @@ void			handle_lastcmd(char ***envp, int prev_pipefd[], \
 							t_subtokenlist **currcmd);
 
 // evaluate_tree_utils_3.c
+int				get_redirfd(char ***envp, int *infilefd, int *outfilefd, \
+							t_subtokenlist *currcmd);
+void			restore_originalfd(int origstdin, int origstdout);
 pid_t			create_fork(void);
 
 // evaluate_tree_utils_4.c
+void			manage_piperedir_child(int pipefd[], int prev_pipefd[], \
+									int infilefd, int outfilefd);
+void			manage_piperedir_parent(int pipefd[], int prev_pipefd[]);
+
+// evaluate_tree_utils_5.c
+void			manage_lastcmdredir(int infilefd, int outfilefd);
+void			manage_lastcmdredir(int infilefd, int outfilefd);
+void			handle_lastcmd_parent(int prev_pipefd[]);
+
+// evaluate_tree_utils_6.c
 t_subtokenlist	*extract_redirection(t_subtokenlist **currcmd);
 int				get_infilefd(t_subtokenlist *redirlist);
 int				get_outfilefd(t_subtokenlist *redirlist);
 
-// evaluate_tree_utils_5.c
+// evaluate_tree_utils_7.c
 int				run_cmd(char ***envp, t_subtokenlist *currcmd);
 void			update_exit_status(char **envp, int exit_status);
 bool			is_builtins(t_subtokenlist *currcmd);
 
-// evaluate_tree_utils_6.c
+// evaluate_tree_utils_8.c
 int				run_execve(char **envp, t_subtokenlist *currcmd);
 
 // evaluate_tree.c

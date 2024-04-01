@@ -5,82 +5,88 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: ychng <ychng@student.42kl.edu.my>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/03/31 05:13:24 by ychng             #+#    #+#             */
-/*   Updated: 2024/04/01 08:01:28 by ychng            ###   ########.fr       */
+/*   Created: 2024/03/31 04:50:53 by ychng             #+#    #+#             */
+/*   Updated: 2024/04/02 00:45:32 by ychng            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "includes/minishell.h"
 
-static char	**currcmd_to_2d_array(t_subtokenlist *currcmd)
+t_subtokenlist	*extract_redirection(t_subtokenlist **currcmd)
 {
-	char			**result;
-	t_subtokennode	*current;
-	int				i;
+	t_subtokenlist	*cmdlist;
+	t_subtokenlist	*redirlist;
 
-	result = malloc(sizeof(char *) * (count_subtokenlist(currcmd) + 1));
-	if (result == NULL)
+	cmdlist = create_subtokenlist();
+	redirlist = create_subtokenlist();
+	while ((*currcmd)->head)
 	{
-		printf("malloc failed for result\n");
-		exit(-1);
+		if (is_redirection((*currcmd)->head->subtoken))
+		{
+			link_subtokenlist(pop_subtokenlist_head(*currcmd), redirlist);
+			link_subtokenlist(pop_subtokenlist_head(*currcmd), redirlist);
+		}
+		else
+		{
+			link_subtokenlist(pop_subtokenlist_head(*currcmd), cmdlist);
+		}
 	}
-	i = 0;
-	current = currcmd->head;
+	free_subtokenlist(*currcmd);
+	*currcmd = cmdlist;
+	return (redirlist);
+}
+
+int	get_infilefd(t_subtokenlist *redirlist)
+{
+	t_subtokennode	*current;
+	char			*name;
+	int				infilefd;
+
+	infilefd = 0;
+	current = redirlist->head;
 	while (current)
 	{
-		result[i] = ft_strdup(current->subtoken);
-		if (result[i] == NULL)
+		if (is_heredoc(current->subtoken) || is_infile(current->subtoken))
 		{
-			printf("ft_strdup failed for result[%d]\n", i);
-			exit(-1);
+			if (infilefd != 0)
+				close(infilefd);
+			name = current->next->subtoken;
+			infilefd = open(name, O_RDONLY, 0644);
+			if (infilefd == -1)
+			{
+				printf("%s: No such file or directory\n", name);
+				break ;
+			}
 		}
-		i++;
 		current = current->next;
 	}
-	result[i] = NULL;
-	return (result);
+	return (infilefd);
 }
 
-static char	*find_full_bin_path(char *bin, char **envp)
+int	get_outfilefd(t_subtokenlist *redirlist)
 {
-	int		i;
-	char	*path;
-	char	*full_path;
+	t_subtokennode	*current;
+	int				lastfd;
+	char			*name;
 
-	if (access(bin, F_OK) == 0)
-		return (bin);
-	i = -1;
-	while (envp[++i])
+	lastfd = 0;
+	current = redirlist->head;
+	while (current)
 	{
-		if (ft_strncmp(envp[i], "PATH=", 5) != 0)
-			continue ;
-		path = ft_strtok(envp[i] + 5, ":");
-		while (path)
+		if (is_append(current->subtoken) || is_output(current->subtoken))
 		{
-			full_path = ft_strjoin(path, bin, "/");
-			if (access(full_path, F_OK) == 0)
-				return (full_path);
-			free(full_path);
-			path = ft_strtok(NULL, ":");
+			name = current->next->subtoken;
+			if (is_append(current->subtoken))
+				lastfd = open(name, O_WRONLY | O_CREAT | O_APPEND, 0644);
+			else if (is_output(current->subtoken))
+				lastfd = open(name, O_WRONLY | O_CREAT | O_TRUNC, 0644);
 		}
+		if (lastfd == -1)
+		{
+			printf("%s: Is a directory\n", name);
+			break ;
+		}
+		current = current->next;
 	}
-	return (NULL);
-}
-
-int	run_execve(char **envp, t_subtokenlist *currcmd)
-{
-	char	**args;
-	char	*bin;
-
-	args = currcmd_to_2d_array(currcmd);
-	bin = find_full_bin_path(args[0], envp);
-	if (bin == NULL)
-	{
-		printf("%s: command not found\n", args[0]);
-		free_double_array(args);
-		return (-1);
-	}
-	execve(bin, args, envp);
-	free_double_array(args);
-	return (-1);
+	return (lastfd);
 }

@@ -6,11 +6,43 @@
 /*   By: ychng <ychng@student.42kl.edu.my>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/31 04:51:03 by ychng             #+#    #+#             */
-/*   Updated: 2024/03/31 05:15:10 by ychng            ###   ########.fr       */
+/*   Updated: 2024/04/02 00:44:52 by ychng            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "includes/minishell.h"
+
+int	get_redirfd(char ***envp, int *infilefd, int *outfilefd, \
+			t_subtokenlist *currcmd)
+{
+	t_subtokenlist	*redirlist;
+
+	redirlist = extract_redirection(currcmd);
+	infilefd = get_infilefd(redirlist);
+	if (infilefd == -1)
+	{
+		update_exit_status(*envp, 1);
+		free_subtokenlist(redirlist);
+		return (-1);
+	}
+	outfilefd = get_outfilefd(redirlist);
+	if (outfilefd == -1)
+	{
+		update_exit_status(*envp, 1);
+		free_subtokenlist(redirlist);
+		return (-1);
+	}
+	free_subtokenlist(redirlist);
+	return (0);
+}
+
+void	restore_originalfd(int origstdin, int origstdout)
+{
+	dup2(origstdin, STDIN_FILENO);
+	close(origstdin);
+	dup2(origstdout, STDOUT_FILENO);
+	close(origstdout);	
+}
 
 pid_t	create_fork(void)
 {

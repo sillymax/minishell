@@ -5,88 +5,45 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: ychng <ychng@student.42kl.edu.my>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/03/31 04:50:53 by ychng             #+#    #+#             */
-/*   Updated: 2024/04/01 23:46:30 by ychng            ###   ########.fr       */
+/*   Created: 2024/04/02 00:45:57 by ychng             #+#    #+#             */
+/*   Updated: 2024/04/02 00:46:33 by ychng            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "includes/minishell.h"
 
-t_subtokenlist	*extract_redirection(t_subtokenlist **currcmd)
+void	manage_piperedir_child(int pipefd[], int prev_pipefd[], \
+							int infilefd, int outfilefd)
 {
-	t_subtokenlist	*cmdlist;
-	t_subtokenlist	*redirlist;
-
-	cmdlist = create_subtokenlist();
-	redirlist = create_subtokenlist();
-	while ((*currcmd)->head)
+	if (prev_pipefd[0] != 0)
 	{
-		if (is_redirection((*currcmd)->head->subtoken))
-		{
-			link_subtokenlist(pop_subtokenlist_head(*currcmd), redirlist);
-			link_subtokenlist(pop_subtokenlist_head(*currcmd), redirlist);
-		}
-		else
-		{
-			link_subtokenlist(pop_subtokenlist_head(*currcmd), cmdlist);
-		}
+		close(prev_pipefd[1]);
+		dup2(prev_pipefd[0], STDIN_FILENO);
+		close(prev_pipefd[0]);
 	}
-	free_subtokenlist(*currcmd);
-	*currcmd = cmdlist;
-	return (redirlist);
+	if (infilefd != 0)
+	{
+		dup2(infilefd, STDIN_FILENO);
+		close(infilefd);
+	}
+	close(pipefd[0]);
+	if (outfilefd != 0)
+	{
+		dup2(outfilefd, STDOUT_FILENO);
+		close(outfilefd);
+	}
+	else
+		dup2(pipefd[1], STDOUT_FILENO);
+	close(pipefd[1]);
 }
 
-int	get_infilefd(t_subtokenlist *redirlist)
+void	manage_piperedir_parent(int pipefd[], int prev_pipefd[])
 {
-	t_subtokennode	*current;
-	char			*name;
-	int				infilefd;
-
-	infilefd = 0;
-	current = redirlist->head;
-	while (current)
+	if (prev_pipefd[0] != 0)
 	{
-		if (is_heredoc(current->subtoken) || is_infile(current->subtoken))
-		{
-			if (infilefd != 0)
-				close(infilefd);
-			name = current->next->subtoken;
-			infilefd = open(name, O_RDONLY, 0644);
-			if (infilefd == -1)
-			{
-				printf("%s: No such file or directory\n", name);
-				break ;
-			}
-		}
-		current = current->next;
+		close(prev_pipefd[0]);
+		close(prev_pipefd[1]);
 	}
-	return (infilefd);
-}
-
-int	get_outfilefd(t_subtokenlist *redirlist)
-{
-	t_subtokennode	*current;
-	int				lastfd;
-	char			*name;
-
-	lastfd = 0;
-	current = redirlist->head;
-	while (current)
-	{
-		if (is_append(current->subtoken) || is_output(current->subtoken))
-		{
-			name = current->next->subtoken;
-			if (is_append(current->subtoken))
-				lastfd = open(name, O_WRONLY | O_CREAT | O_APPEND, 0644);
-			else if (is_output(current->subtoken))
-				lastfd = open(name, O_WRONLY | O_CREAT | O_TRUNC, 0644);
-		}
-		if (lastfd == -1)
-		{
-			printf("%s: Is a directory\n", name);
-			break ;
-		}
-		current = current->next;
-	}
-	return (lastfd);
+	prev_pipefd[0] = pipefd[0];
+	prev_pipefd[1] = pipefd[1];
 }
