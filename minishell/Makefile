@@ -57,6 +57,8 @@ SRCS := character_check_1.c \
 		build_tree_utils_1.c \
 		build_tree_utils_2.c \
 		build_tree.c \
+		evaluate_heredocs_utils_1.c \
+		evaluate_heredocs_utils_2.c \
 		evaluate_heredocs.c \
 		evaluate_tree_utils_1.c \
 		evaluate_tree_utils_2.c \
