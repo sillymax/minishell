@@ -6,7 +6,7 @@
 /*   By: ychng <ychng@student.42kl.edu.my>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/19 01:44:22 by ychng             #+#    #+#             */
-/*   Updated: 2024/03/23 01:15:20 by ychng            ###   ########.fr       */
+/*   Updated: 2024/04/02 23:48:50 by ychng            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,19 +54,18 @@ char	*pad_env_name(char *entry, int maxlen)
 
 char	*trim_env_name_pad(char *entry)
 {
-	int		old_size;
 	int		new_size;
 	char	*result;
 
-	old_size = ft_strcspn(entry, "=") + 1;
-	new_size = ft_strcspn(entry, " ") + 1;
-	result = ft_realloc(ft_strndup(entry, old_size), old_size, new_size);
+	new_size = ft_strcspn(entry, " ");
+	if (new_size == ft_strlen(entry))
+		new_size = ft_strcspn(entry, "=");
+	result = ft_strndup(entry, new_size);
 	if (!result)
 	{
 		printf("ft_realloc failed for result\n");
 		exit(-1);
 	}
-	result[new_size] = '\0';
 	result = custom_strjoin(result, ft_strchr(entry, '='));
 	free(entry);
 	return (result);
