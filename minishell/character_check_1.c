@@ -6,7 +6,7 @@
 /*   By: ychng <ychng@student.42kl.edu.my>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/18 18:41:55 by ychng             #+#    #+#             */
-/*   Updated: 2024/03/24 04:26:43 by ychng            ###   ########.fr       */
+/*   Updated: 2024/04/02 17:46:49 by ychng            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,19 +17,19 @@ bool	is_backslash(char c)
 	return (c == '\\');
 }
 
-bool	is_singlequote(char c)
+bool	is_singquote(char c)
 {
 	return (c == '\'');
 }
 
-bool	is_double_quote(char c)
+bool	is_doubquote(char c)
 {
 	return (c == '\"');
 }
 
 bool	is_quote(char c)
 {
-	return (is_singlequote(c) || is_double_quote(c));
+	return (is_singquote(c) || is_doubquote(c));
 }
 
 bool	is_delim(char c, char *delim)

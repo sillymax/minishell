@@ -6,7 +6,7 @@
 /*   By: ychng <ychng@student.42kl.edu.my>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/29 15:18:36 by ychng             #+#    #+#             */
-/*   Updated: 2024/03/29 16:28:59 by ychng            ###   ########.fr       */
+/*   Updated: 2024/04/02 17:45:45 by ychng            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ bool	has_openquotes(char *input)
 	quote_t = '\0';
 	while (*input)
 	{
-		if (!escaped && !is_singlequote(quote_t) && is_backslash(*input))
+		if (!escaped && !is_singquote(quote_t) && is_backslash(*input))
 			escaped = true;
 		else if (!escaped && is_quote(*input))
 			toggle_inquote(*input, &inquote, &quote_t);
@@ -49,7 +49,7 @@ bool	has_openbrackets(char *input)
 	open_count = 0;
 	while (*input)
 	{
-		if (!escaped && !is_singlequote(quote_t) && is_backslash(*input))
+		if (!escaped && !is_singquote(quote_t) && is_backslash(*input))
 			escaped = true;
 		else if (!escaped && is_quote(*input))
 			toggle_inquote(*input, &inquote, &quote_t);
@@ -76,7 +76,7 @@ bool	has_openlogicalops(char *input)
 	inoperator = false;
 	while (*input)
 	{
-		if (!escaped && !is_singlequote(quote_t) && is_backslash(*input))
+		if (!escaped && !is_singquote(quote_t) && is_backslash(*input))
 			escaped = true;
 		else if (!escaped && is_quote(*input))
 			toggle_inquote(*input, &inquote, &quote_t);

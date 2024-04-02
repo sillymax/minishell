@@ -6,7 +6,7 @@
 /*   By: ychng <ychng@student.42kl.edu.my>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/23 14:37:12 by ychng             #+#    #+#             */
-/*   Updated: 2024/03/03 02:55:55 by ychng            ###   ########.fr       */
+/*   Updated: 2024/04/02 17:46:49 by ychng            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ bool	is_newline(char c)
 bool	is_escapable(char c)
 {
 	return (is_backslash(c)
-		|| (is_double_quote(c))
+		|| (is_doubquote(c))
 		|| (is_newline(c)));
 }
 

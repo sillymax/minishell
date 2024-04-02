@@ -6,7 +6,7 @@
 /*   By: ychng <ychng@student.42kl.edu.my>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/20 16:55:40 by ychng             #+#    #+#             */
-/*   Updated: 2024/04/02 01:30:21 by ychng            ###   ########.fr       */
+/*   Updated: 2024/04/02 18:21:58 by ychng            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,8 +52,8 @@ typedef struct s_treenode
 
 // character_check_1.c
 bool			is_backslash(char c);
-bool			is_singlequote(char c);
-bool			is_double_quote(char c);
+bool			is_singquote(char c);
+bool			is_doubquote(char c);
 bool			is_quote(char c);
 bool			is_delim(char c, char *delim);
 
@@ -286,6 +286,9 @@ bool			should_escape(char quote_type, char *subtoken);
 
 // expand_escaped.c
 char			*expand_escaped(char *subtoken);
+
+// expand_quotes.c
+char			*expand_quotes(char *subtoken, int subtokenlen);
 
 // subtokenlist_utils_1.c
 t_subtokennode	*new_subtokennode(char *subtoken);

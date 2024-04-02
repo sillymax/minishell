@@ -6,7 +6,7 @@
 /*   By: ychng <ychng@student.42kl.edu.my>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/17 18:04:09 by ychng             #+#    #+#             */
-/*   Updated: 2024/03/24 04:29:47 by ychng            ###   ########.fr       */
+/*   Updated: 2024/04/02 17:45:45 by ychng            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ static char	*find_token_end(char *remaining_input, char *delim)
 	quote_type = '\0';
 	while (*remaining_input)
 	{
-		if (!escaped && !is_singlequote(quote_type)
+		if (!escaped && !is_singquote(quote_type)
 			&& is_backslash(*remaining_input))
 			escaped = true;
 		else if (!escaped && is_quote(*remaining_input))
