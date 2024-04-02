@@ -6,7 +6,7 @@
 /*   By: ychng <ychng@student.42kl.edu.my>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/29 15:22:33 by ychng             #+#    #+#             */
-/*   Updated: 2024/03/29 16:12:33 by ychng            ###   ########.fr       */
+/*   Updated: 2024/04/02 21:32:13 by ychng            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,7 @@ char	*trim_errorpart(char *input)
 
 	openlogicalops = 0;
 	openbrackets = 0;
+	openredirs = 0;
 	joinedlen = 0;
 	token = get_next_token(input, false);
 	while (token)
