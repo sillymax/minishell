@@ -6,7 +6,7 @@
 /*   By: ychng <ychng@student.42kl.edu.my>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/27 01:20:16 by ychng             #+#    #+#             */
-/*   Updated: 2024/04/02 19:52:09 by ychng            ###   ########.fr       */
+/*   Updated: 2024/04/02 21:15:49 by ychng            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,10 +72,10 @@ char	*extract_heredoc(char *input, int joinedlen)
 	int		openheredoc;
 
 	joinedtokens = ft_strndup(input, joinedlen);
+	free(input);
 	if (!joinedtokens)
 	{
 		printf("ft_strndup failed for joinedtokens\n");
-		free(input);
 		exit(-1);
 	}
 	result = NULL;
