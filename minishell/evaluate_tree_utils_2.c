@@ -6,7 +6,7 @@
 /*   By: ychng <ychng@student.42kl.edu.my>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/31 04:51:00 by ychng             #+#    #+#             */
-/*   Updated: 2024/04/02 00:47:19 by ychng            ###   ########.fr       */
+/*   Updated: 2024/04/03 12:28:21 by ychng            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,7 @@ void	handle_lastcmd(char ***envp, int prev_pipefd[], \
 	int				outfilefd;
 	int				origstdin;
 	int				origstdout;
+	int				exitcode;
 
 	if (get_redirfd(envp, &infilefd, &outfilefd, currcmd) == -1)
 		return ;
@@ -52,7 +53,10 @@ void	handle_lastcmd(char ***envp, int prev_pipefd[], \
 	origstdout = dup(STDOUT_FILENO);
 	manage_lastcmdredir(infilefd, outfilefd);
 	if (prev_pipefd[0] == 0 && is_builtins(*currcmd))
-		update_exit_status(*envp, run_cmd(envp, *currcmd));
+	{
+		exitcode = run_cmd(envp, *currcmd);
+		update_exit_status(*envp, exitcode);
+	}
 	else
 	{
 		if (create_fork() == 0)
