@@ -6,7 +6,7 @@
 /*   By: ychng <ychng@student.42kl.edu.my>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/03 14:38:03 by ychng             #+#    #+#             */
-/*   Updated: 2024/04/03 20:50:10 by ychng            ###   ########.fr       */
+/*   Updated: 2024/04/03 21:11:04 by ychng            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,7 @@ int	get_dirsize(void)
 	struct dirent	*entry;
 
 	dp = opendir(".");
-	if (dp == -1)
+	if (dp == NULL)
 	{
 		printf("opendir failed for dp\n");
 		exit(-1);
@@ -87,7 +87,7 @@ int	get_dirsize(void)
 		count++;
 		entry = readdir(dp);
 	}
-	close(dp);
+	closedir(dp);
 	return (count);
 }
 
@@ -97,7 +97,6 @@ char	*handle_globexpansion(void)
 	int				count;
 	struct dirent	*entry;
 	char			*result;
-	char			*prevresult;
 
 	dp = opendir(".");
 	if (dp == NULL)
@@ -123,7 +122,7 @@ char	*handle_globexpansion(void)
 	return (result);
 }
 
-char	*expand_glob(char *subtoken)
+char	*expand_glob(char *subtoken, t_subtokenlist *subtokenlist)
 {
 	char	*trimmedquotes;
 	char	*trimmedglobs;
@@ -136,7 +135,15 @@ char	*expand_glob(char *subtoken)
 	{
 		free(subtoken);
 		result = handle_globexpansion();
-		return (result);
+		char	*subtoken;
+
+		subtoken = get_next_subtoken(result);
+		while (subtoken)
+		{
+			link_subtokenlist(new_subtokennode(subtoken), subtokenlist);
+			subtoken = get_next_subtoken(NULL);
+		}
+		return (NULL);
 	}
 	return (subtoken);
 }

@@ -6,7 +6,7 @@
 /*   By: ychng <ychng@student.42kl.edu.my>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/20 16:55:40 by ychng             #+#    #+#             */
-/*   Updated: 2024/04/03 14:36:51 by ychng            ###   ########.fr       */
+/*   Updated: 2024/04/03 20:55:29 by ychng            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -275,7 +275,7 @@ char			*join_key_with_value(char *value, char *subtoken);
 char			*expand_tilde(char *subtoken);
 
 // expand_glob.c
-char			*expand_glob(char *subtoken);
+char			*expand_glob(char *subtoken, t_subtokenlist *subtokenlist);
 
 // get_next_line_utils.c
 bool			contains_newline(char *remaining_line);
@@ -314,7 +314,7 @@ void			link_tokenlist(t_tokennode *tokennode, \
 
 // get_tokenlist_utils.c
 char			*expand_subtoken(char *subtoken, bool expand_heredoc, \
-									char **envp);
+									char **envp, t_subtokenlist *subtokenlist);
 
 // get_tokenlist.c
 t_tokenlist		*get_tokenlist(char *input, char **envp);
