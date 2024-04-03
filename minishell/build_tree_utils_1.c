@@ -6,7 +6,7 @@
 /*   By: ychng <ychng@student.42kl.edu.my>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/23 02:38:57 by ychng             #+#    #+#             */
-/*   Updated: 2024/03/23 02:41:04 by ychng            ###   ########.fr       */
+/*   Updated: 2024/04/03 11:47:23 by ychng            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,6 @@ t_treenode	*pop_treenode_from(t_treenode **list)
 
 	if (*list == NULL)
 		return (NULL);
-
 	if ((*list)->next == NULL)
 	{
 		popnode = *list;

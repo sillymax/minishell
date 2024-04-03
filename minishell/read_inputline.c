@@ -6,7 +6,7 @@
 /*   By: ychng <ychng@student.42kl.edu.my>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/20 19:39:08 by ychng             #+#    #+#             */
-/*   Updated: 2024/03/30 01:28:49 by ychng            ###   ########.fr       */
+/*   Updated: 2024/04/03 11:46:27 by ychng            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,6 +88,5 @@ char	*read_inputline(void)
 		update_history(input);
 	}
 	input = handle_errortrim(input);
-	// printf("%s\n", input);
 	return (input);
 }

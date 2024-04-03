@@ -6,7 +6,7 @@
 /*   By: ychng <ychng@student.42kl.edu.my>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/02 00:46:53 by ychng             #+#    #+#             */
-/*   Updated: 2024/04/02 00:47:23 by ychng            ###   ########.fr       */
+/*   Updated: 2024/04/03 11:45:18 by ychng            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ void	handle_lastcmd_child(int prev_pipefd[], int infilefd)
 		if (infilefd == 0)
 			dup2(prev_pipefd[0], STDIN_FILENO);
 		close(prev_pipefd[0]);
-	}	
+	}
 }
 
 void	handle_lastcmd_parent(int prev_pipefd[])

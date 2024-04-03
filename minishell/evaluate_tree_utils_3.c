@@ -6,7 +6,7 @@
 /*   By: ychng <ychng@student.42kl.edu.my>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/31 04:51:03 by ychng             #+#    #+#             */
-/*   Updated: 2024/04/02 00:57:23 by ychng            ###   ########.fr       */
+/*   Updated: 2024/04/03 11:45:06 by ychng            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ void	restore_originalfd(int origstdin, int origstdout)
 	dup2(origstdin, STDIN_FILENO);
 	close(origstdin);
 	dup2(origstdout, STDOUT_FILENO);
-	close(origstdout);	
+	close(origstdout);
 }
 
 pid_t	create_fork(void)
