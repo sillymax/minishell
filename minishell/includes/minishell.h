@@ -6,7 +6,7 @@
 /*   By: ychng <ychng@student.42kl.edu.my>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/20 16:55:40 by ychng             #+#    #+#             */
-/*   Updated: 2024/04/02 18:21:58 by ychng            ###   ########.fr       */
+/*   Updated: 2024/04/03 14:36:51 by ychng            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -273,6 +273,9 @@ char			*join_key_with_value(char *value, char *subtoken);
 
 // expand_tilde.c
 char			*expand_tilde(char *subtoken);
+
+// expand_glob.c
+char			*expand_glob(char *subtoken);
 
 // get_next_line_utils.c
 bool			contains_newline(char *remaining_line);

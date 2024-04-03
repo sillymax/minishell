@@ -47,6 +47,7 @@ SRCS := character_check_1.c \
 		expand_tilde_utils_2.c \
 		expand_tilde_helper.c \
 		expand_tilde.c \
+		expand_glob.c \
 		expand_escaped_utils.c \
 		expand_escaped.c \
 		expand_quotes.c \
