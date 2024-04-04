@@ -6,7 +6,7 @@
 /*   By: ychng <ychng@student.42kl.edu.my>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/03 14:38:03 by ychng             #+#    #+#             */
-/*   Updated: 2024/04/04 19:19:25 by ychng            ###   ########.fr       */
+/*   Updated: 2024/04/04 19:37:44 by ychng            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,18 +68,26 @@ char	*trim_emptyquotes(char *subtoken)
 	return (result);	
 }
 
+DIR	*get_dp(char *path)
+{
+	DIR	*dp;
+
+	dp = opendir(path);
+	if (dp == NULL)
+	{
+		printf("opendir failed for dp\n");
+		exit(-1);
+	}
+	return (dp);
+}
+
 int	get_dirsize(void)
 {
 	DIR				*dp;
 	int				count;
 	struct dirent	*entry;
 
-	dp = opendir(".");
-	if (dp == NULL)
-	{
-		printf("opendir failed for dp\n");
-		exit(-1);
-	}
+	dp = get_dp(".");
 	count = 0;
 	entry = readdir(dp);
 	while (entry != NULL)
@@ -98,12 +106,7 @@ char	*handle_globexpansion(void)
 	struct dirent	*entry;
 	char			*result;
 
-	dp = opendir(".");
-	if (dp == NULL)
-	{
-		printf("opendir failed for dp\n");
-		exit(-1);
-	}
+	dp = get_dp(".");
 	result = NULL;
 	count = get_dirsize();
 	entry = readdir(dp);
