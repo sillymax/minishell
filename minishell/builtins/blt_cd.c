@@ -6,7 +6,7 @@
 /*   By: ychng <ychng@student.42kl.edu.my>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/20 03:19:32 by ychng             #+#    #+#             */
-/*   Updated: 2024/03/23 01:05:45 by ychng            ###   ########.fr       */
+/*   Updated: 2024/04/04 19:17:48 by ychng            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ static void	handle_path(char **envp, char *path)
 	char	*cwd;
 
 	handle_oldpwd(envp);
-	if (is_forward_slash(path[0]))
+	if (is_forwardslash(path[0]))
 	{
 		if (chdir(path) != 0)
 			printf("chdir failed for %s\n", path);

@@ -6,7 +6,7 @@
 /*   By: ychng <ychng@student.42kl.edu.my>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/20 16:55:40 by ychng             #+#    #+#             */
-/*   Updated: 2024/04/03 20:55:29 by ychng            ###   ########.fr       */
+/*   Updated: 2024/04/04 19:17:48 by ychng            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,7 +86,7 @@ bool			is_bracket(char c);
 bool			is_pipe(char c);
 
 // character_check_6.c
-bool			is_forward_slash(char c);
+bool			is_forwardslash(char c);
 
 // operator_check_1.c
 bool			is_logicalop(char *str);

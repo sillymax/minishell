@@ -6,7 +6,7 @@
 /*   By: ychng <ychng@student.42kl.edu.my>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/31 05:13:24 by ychng             #+#    #+#             */
-/*   Updated: 2024/04/02 00:45:38 by ychng            ###   ########.fr       */
+/*   Updated: 2024/04/04 19:17:20 by ychng            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ static char	*find_full_bin_path(char *bin, char **envp)
 	char	*path;
 	char	*full_path;
 
-	if (access(bin, F_OK) == 0)
+	if (is_forwardslash(*bin) && access(bin, F_OK) == 0)
 		return (bin);
 	i = -1;
 	while (envp[++i])
@@ -80,6 +80,9 @@ int	run_execve(char **envp, t_subtokenlist *currcmd)
 		free_double_array(args);
 		return (-1);
 	}
+	int i = -1;
+	while (args[++i])
+	{printf("%s\n", bin);}
 	execve(bin, args, envp);
 	free_double_array(args);
 	return (-1);
