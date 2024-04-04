@@ -6,7 +6,7 @@
 /*   By: ychng <ychng@student.42kl.edu.my>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/03 14:38:03 by ychng             #+#    #+#             */
-/*   Updated: 2024/04/04 19:39:23 by ychng            ###   ########.fr       */
+/*   Updated: 2024/04/04 19:45:58 by ychng            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -125,6 +125,23 @@ char	*handle_globexpansion(void)
 	return (result);
 }
 
+// I pop the last node so that the link subtokenlist outside can till work normally
+// if not i add an extra "" empty string
+char	*link_entries(char *result, t_subtokenlist *subtokenlist)
+{
+	char	*subtoken;
+
+	subtoken = ft_strtok(result, " ");
+	while (subtoken)
+	{
+		link_subtokenlist(new_subtokennode(ft_strdup(subtoken)), subtokenlist);
+		subtoken = ft_strtok(NULL, " ");
+	}
+	subtoken = ft_strdup(subtokenlist->tail->subtoken);
+	free_subtokennode(pop_subtokenlist_tail(subtokenlist));
+	return (subtoken);
+}
+
 char	*expand_glob(char *subtoken, t_subtokenlist *subtokenlist)
 {
 	char	*trimmedquotes;
@@ -138,17 +155,7 @@ char	*expand_glob(char *subtoken, t_subtokenlist *subtokenlist)
 	{
 		free(subtoken);
 		result = handle_globexpansion();
-		char	*subtoken;
-
-		subtoken = ft_strtok(result, " ");
-		while (subtoken)
-		{
-			link_subtokenlist(new_subtokennode(ft_strdup(subtoken)), subtokenlist);
-			subtoken = ft_strtok(NULL, " ");
-		}
-		subtoken = ft_strdup(subtokenlist->tail->subtoken);
-		free_subtokennode(pop_subtokenlist_tail(subtokenlist));
-		return (subtoken);
+		return (link_entries(result, subtokenlist));
 	}
 	return (subtoken);
 }
