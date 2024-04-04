@@ -6,7 +6,7 @@
 /*   By: ychng <ychng@student.42kl.edu.my>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/20 16:55:40 by ychng             #+#    #+#             */
-/*   Updated: 2024/04/04 19:17:48 by ychng            ###   ########.fr       */
+/*   Updated: 2024/04/04 19:53:37 by ychng            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -273,6 +273,12 @@ char			*join_key_with_value(char *value, char *subtoken);
 
 // expand_tilde.c
 char			*expand_tilde(char *subtoken);
+
+// expand_glob_utils.c
+int				trim_frontemptyquotes(char *subtoken);
+int				trim_backemptyquotes(char *subtoken);
+DIR				*get_dp(char *path);
+int				get_dirsize(void);
 
 // expand_glob.c
 char			*expand_glob(char *subtoken, t_subtokenlist *subtokenlist);
