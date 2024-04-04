@@ -6,7 +6,7 @@
 /*   By: ychng <ychng@student.42kl.edu.my>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/03 14:38:03 by ychng             #+#    #+#             */
-/*   Updated: 2024/04/04 19:37:44 by ychng            ###   ########.fr       */
+/*   Updated: 2024/04/04 19:39:23 by ychng            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -140,11 +140,11 @@ char	*expand_glob(char *subtoken, t_subtokenlist *subtokenlist)
 		result = handle_globexpansion();
 		char	*subtoken;
 
-		subtoken = get_next_subtoken(result);
+		subtoken = ft_strtok(result, " ");
 		while (subtoken)
 		{
-			link_subtokenlist(new_subtokennode(subtoken), subtokenlist);
-			subtoken = get_next_subtoken(NULL);
+			link_subtokenlist(new_subtokennode(ft_strdup(subtoken)), subtokenlist);
+			subtoken = ft_strtok(NULL, " ");
 		}
 		subtoken = ft_strdup(subtokenlist->tail->subtoken);
 		free_subtokennode(pop_subtokenlist_tail(subtokenlist));
