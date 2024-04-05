@@ -6,7 +6,7 @@
 /*   By: ychng <ychng@student.42kl.edu.my>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/20 19:39:08 by ychng             #+#    #+#             */
-/*   Updated: 2024/04/03 11:46:27 by ychng            ###   ########.fr       */
+/*   Updated: 2024/04/06 01:28:24 by ychng            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ static char	*handle_maininput(void)
 		maininput = readline("main> ");
 		if (maininput == NULL)
 		{
-			printf("Ctrl+D was pressed in handle_maininput\n");
+			printf("exit\n");	
 			exit(-1);
 		}
 	}

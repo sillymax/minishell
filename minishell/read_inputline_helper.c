@@ -6,7 +6,7 @@
 /*   By: ychng <ychng@student.42kl.edu.my>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/25 01:20:21 by ychng             #+#    #+#             */
-/*   Updated: 2024/03/29 16:15:52 by ychng            ###   ########.fr       */
+/*   Updated: 2024/04/06 01:32:53 by ychng            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ char	*closequotes(char *input)
 		joininput = readline("join> ");
 		if (!joininput)
 		{
-			printf("Ctrl+D was pressed in closequotes\n");
+			printf("syntax error: unexpected end of file\n");
 			free(input);
 			exit(-1);
 		}
@@ -43,7 +43,7 @@ char	*closebrackets(char *input)
 		joininput = readline("join> ");
 		if (joininput == NULL)
 		{
-			printf("Ctrl+D was pressed in closebrackets\n");
+			printf("syntax error: unexpected end of file\n");
 			free(input);
 			exit(-1);
 		}
@@ -68,7 +68,7 @@ char	*closelogicalops(char *input)
 		joininput = readline("join> ");
 		if (joininput == false)
 		{
-			printf("Ctrl+D was pressed in closelogicalops\n");
+			printf("syntax error: unexpected end of file\n");
 			free(input);
 			exit(-1);
 		}
