@@ -6,7 +6,7 @@
 /*   By: ychng <ychng@student.42kl.edu.my>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/17 17:56:25 by ychng             #+#    #+#             */
-/*   Updated: 2024/04/06 01:12:43 by ychng            ###   ########.fr       */
+/*   Updated: 2024/04/06 01:20:07 by ychng            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,6 +80,7 @@ int	main(int argc, char **argv, char **envp)
 	t_treenode	*root;
 
 	signal(SIGINT, sigint_handler);
+	signal(SIGQUIT, SIG_IGN);
 	((void)argc, (void)argv);
 	envp = clone_envp_with_special(envp);
 	while (1)
