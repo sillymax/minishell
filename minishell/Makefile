@@ -10,7 +10,8 @@ OBJS_PATH := ./objs/
 BUILTINS_PATH := ./builtins/
 
 # Source files
-SRCS := character_check_1.c \
+SRCS := global.c \
+		character_check_1.c \
 		character_check_2.c \
 		character_check_3.c \
 		character_check_4.c \
