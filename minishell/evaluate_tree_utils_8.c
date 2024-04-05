@@ -6,7 +6,7 @@
 /*   By: ychng <ychng@student.42kl.edu.my>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/31 05:13:24 by ychng             #+#    #+#             */
-/*   Updated: 2024/04/04 19:17:20 by ychng            ###   ########.fr       */
+/*   Updated: 2024/04/05 22:11:50 by ychng            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,9 +80,6 @@ int	run_execve(char **envp, t_subtokenlist *currcmd)
 		free_double_array(args);
 		return (-1);
 	}
-	int i = -1;
-	while (args[++i])
-	{printf("%s\n", bin);}
 	execve(bin, args, envp);
 	free_double_array(args);
 	return (-1);

@@ -6,7 +6,7 @@
 /*   By: ychng <ychng@student.42kl.edu.my>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/04 19:47:12 by ychng             #+#    #+#             */
-/*   Updated: 2024/04/04 19:52:01 by ychng            ###   ########.fr       */
+/*   Updated: 2024/04/05 22:11:24 by ychng            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,8 @@ int	trim_frontemptyquotes(char *subtoken)
 			break ;
 		start++;
 	}
+	if (inquote)
+		return (0);
 	return (start);
 }
 
@@ -43,7 +45,7 @@ int	trim_backemptyquotes(char *subtoken)
 	end = ft_strlen(subtoken);
 	inquote = false;
 	quote_type = '\0';
-		while (end > 0 && is_quote(subtoken[end - 1]))
+	while (end > 0 && is_quote(subtoken[end - 1]))
 	{
 		if (inquote == false)
 			toggle_inquote(subtoken[end - 1], &inquote, &quote_type);
@@ -53,6 +55,8 @@ int	trim_backemptyquotes(char *subtoken)
 			break ;
 		end--;
 	}
+	if (inquote)
+		return (ft_strlen(subtoken));
 	return (end);
 }
 
