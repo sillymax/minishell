@@ -51,6 +51,7 @@ SRCS := character_check_1.c \
 		expand_glob.c \
 		expand_escaped_utils.c \
 		expand_escaped.c \
+		expand_quotes_utils.c \
 		expand_quotes.c \
 		subtoken_list_utils_1.c \
 		subtoken_list_utils_2.c \

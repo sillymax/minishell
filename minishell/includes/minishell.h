@@ -6,7 +6,7 @@
 /*   By: ychng <ychng@student.42kl.edu.my>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/20 16:55:40 by ychng             #+#    #+#             */
-/*   Updated: 2024/04/04 19:53:37 by ychng            ###   ########.fr       */
+/*   Updated: 2024/04/06 00:46:14 by ychng            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -295,6 +295,11 @@ bool			should_escape(char quote_type, char *subtoken);
 
 // expand_escaped.c
 char			*expand_escaped(char *subtoken);
+
+// expand_quotes_utils.c
+char			*alloc_result(char *subtoken);
+void			handle_normchar(char **result, char **subtoken, \
+								bool *escaped, bool should_escape);
 
 // expand_quotes.c
 char			*expand_quotes(char *subtoken, int subtokenlen);
