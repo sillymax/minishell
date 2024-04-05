@@ -6,7 +6,7 @@
 /*   By: ychng <ychng@student.42kl.edu.my>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/17 17:56:25 by ychng             #+#    #+#             */
-/*   Updated: 2024/04/06 03:56:36 by ychng            ###   ########.fr       */
+/*   Updated: 2024/04/06 04:32:06 by ychng            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,6 +72,7 @@ void	sigint_handler(int sig)
 {
 	if (sig == SIGINT)
 	{
+		global_sig = sig;
 		printf("\n");
 		rl_replace_line("", 0);
 		rl_on_new_line();
@@ -90,7 +91,7 @@ int	main(int argc, char **argv, char **envp)
 	envp = clone_envp_with_special(envp);
 	while (1)
 	{
-		input = read_inputline();
+		input = read_inputline(envp);
 		tokenlist = get_tokenlist(input, envp);
 		root = build_tree(tokenlist);
 		evaluate_heredocs(root);

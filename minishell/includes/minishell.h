@@ -6,7 +6,7 @@
 /*   By: ychng <ychng@student.42kl.edu.my>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/20 16:55:40 by ychng             #+#    #+#             */
-/*   Updated: 2024/04/06 02:51:09 by ychng            ###   ########.fr       */
+/*   Updated: 2024/04/06 04:34:40 by ychng            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -238,12 +238,12 @@ char			*extract_heredoc(char *input, int joinedlen);
 char			*format_joininput(char *joininput);
 
 // read_inputline_helper.c
-char			*closequotes(char *input);
-char			*closebrackets(char *input);
-char			*closelogicalops(char *input);
+char			*closequotes(char *input, char **envp);
+char			*closebrackets(char *input, char **envp);
+char			*closelogicalops(char *input, char **envp);
 
 // read_inputline.c
-char			*read_inputline(void);
+char			*read_inputline(char **envp);
 
 // expand_env_utils_1.c
 int				count_len_until_env(char *subtoken, char *env);

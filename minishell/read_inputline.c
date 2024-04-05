@@ -6,13 +6,13 @@
 /*   By: ychng <ychng@student.42kl.edu.my>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/20 19:39:08 by ychng             #+#    #+#             */
-/*   Updated: 2024/04/06 01:28:24 by ychng            ###   ########.fr       */
+/*   Updated: 2024/04/06 04:34:47 by ychng            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "includes/minishell.h"
 
-static char	*handle_maininput(void)
+static char	*handle_maininput(char **envp)
 {
 	bool	firstiter;
 	char	*maininput;
@@ -28,6 +28,11 @@ static char	*handle_maininput(void)
 		{
 			printf("exit\n");	
 			exit(-1);
+		}
+		if (global_sig == SIGINT)
+		{
+			global_sig = 0;
+			update_exit_status(envp, 130);
 		}
 	}
 	return (maininput);
@@ -70,21 +75,21 @@ static void	update_history(char *input)
 	add_history(previnput);
 }
 
-char	*read_inputline(void)
+char	*read_inputline(char **envp)
 {
 	char	*input;
 
-	input = handle_maininput();
+	input = handle_maininput(envp);
 	update_history(input);
 	while (has_noerror(input) && has_openblock(input))
 	{
-		input = closequotes(input);
+		input = closequotes(input, envp);
 		if (!has_noerror(input))
 			break ;
-		input = closebrackets(input);
+		input = closebrackets(input, envp);
 		if (!has_noerror(input))
 			break ;
-		input = closelogicalops(input);
+		input = closelogicalops(input, envp);
 		update_history(input);
 	}
 	input = handle_errortrim(input);

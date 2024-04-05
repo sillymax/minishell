@@ -6,13 +6,13 @@
 /*   By: ychng <ychng@student.42kl.edu.my>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/25 01:20:21 by ychng             #+#    #+#             */
-/*   Updated: 2024/04/06 01:32:53 by ychng            ###   ########.fr       */
+/*   Updated: 2024/04/06 04:34:03 by ychng            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "includes/minishell.h"
 
-char	*closequotes(char *input)
+char	*closequotes(char *input, char **envp)
 {
 	char	*joininput;
 
@@ -26,6 +26,11 @@ char	*closequotes(char *input)
 			free(input);
 			exit(-1);
 		}
+		if (global_sig == SIGINT)
+		{
+			global_sig = 0;
+			update_exit_status(envp, 130);
+		}
 		joininput = format_joininput(joininput);
 		input = custom_strjoin(input, joininput);
 		free(joininput);
@@ -33,7 +38,7 @@ char	*closequotes(char *input)
 	return (input);
 }
 
-char	*closebrackets(char *input)
+char	*closebrackets(char *input, char **envp)
 {
 	char	*joininput;
 	char	*triminput;
@@ -47,19 +52,24 @@ char	*closebrackets(char *input)
 			free(input);
 			exit(-1);
 		}
+		if (global_sig == SIGINT)
+		{
+			global_sig = 0;
+			update_exit_status(envp, 130);
+		}
 		triminput = ft_strtrim(input, "\n");
 		free(input);
 		input = triminput;
 		if (*joininput != '\0')
 			input = custom_strjoin(input, " ");
 		input = custom_strjoin(input, joininput);
-		input = closequotes(input);
+		input = closequotes(input, envp);
 		free(joininput);
 	}
 	return (input);
 }
 
-char	*closelogicalops(char *input)
+char	*closelogicalops(char *input, char **envp)
 {
 	char	*joininput;
 
@@ -71,6 +81,11 @@ char	*closelogicalops(char *input)
 			printf("syntax error: unexpected end of file\n");
 			free(input);
 			exit(-1);
+		}
+		if (global_sig == SIGINT)
+		{
+			global_sig = 0;
+			update_exit_status(envp, 130);
 		}
 		if (*joininput != '\0')
 		{
