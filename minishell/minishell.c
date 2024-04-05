@@ -6,7 +6,7 @@
 /*   By: ychng <ychng@student.42kl.edu.my>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/17 17:56:25 by ychng             #+#    #+#             */
-/*   Updated: 2024/04/02 18:21:20 by ychng            ###   ########.fr       */
+/*   Updated: 2024/04/06 01:12:43 by ychng            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,12 +62,24 @@ void	free_tree(t_treenode *root)
 	free(root);
 }
 
+void	sigint_handler(int sig)
+{
+	if (sig == SIGINT)
+	{
+		printf("\n");
+		rl_replace_line("", 0);
+		rl_on_new_line();
+		rl_redisplay();	
+	}
+}
+
 int	main(int argc, char **argv, char **envp)
 {
 	char		*input;
 	t_tokenlist	*tokenlist;
 	t_treenode	*root;
 
+	signal(SIGINT, sigint_handler);
 	((void)argc, (void)argv);
 	envp = clone_envp_with_special(envp);
 	while (1)
