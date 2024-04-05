@@ -6,7 +6,7 @@
 /*   By: ychng <ychng@student.42kl.edu.my>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/31 05:02:36 by ychng             #+#    #+#             */
-/*   Updated: 2024/04/02 00:45:35 by ychng            ###   ########.fr       */
+/*   Updated: 2024/04/06 02:21:10 by ychng            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,6 +71,8 @@ bool	is_builtins(t_subtokenlist *currcmd)
 {
 	char	*cmd;
 
+	if (currcmd->head == NULL)
+		return (false);
 	cmd = currcmd->head->subtoken;
 	if (!ft_strcmp(cmd, "echo"))
 		return (true);
