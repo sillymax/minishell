@@ -6,7 +6,7 @@
 /*   By: ychng <ychng@student.42kl.edu.my>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/20 16:55:40 by ychng             #+#    #+#             */
-/*   Updated: 2024/04/06 04:34:40 by ychng            ###   ########.fr       */
+/*   Updated: 2024/04/06 04:38:14 by ychng            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -350,10 +350,10 @@ void			manage_heredoc(t_subtokenlist *result, char *heredoc, \
 							int heredoc_count, int count);
 
 // evaluate_heredocs_utils_2.c
-char			*create_tmpfile(t_subtokenlist *currcmd);
+char			*create_tmpfile(t_subtokenlist *currcmd, char **envp);
 
 // evaluate_heredocs.
-void			evaluate_heredocs(t_treenode *root);
+void			evaluate_heredocs(t_treenode *root, char **envp);
 
 // evaluate_tree_utils_1.c
 void			exec_cmd(char ***envp, int prev_pipefd[], \

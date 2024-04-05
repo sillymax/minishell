@@ -6,20 +6,20 @@
 /*   By: ychng <ychng@student.42kl.edu.my>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/02 01:19:34 by ychng             #+#    #+#             */
-/*   Updated: 2024/04/06 04:35:54 by ychng            ###   ########.fr       */
+/*   Updated: 2024/04/06 04:56:26 by ychng            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "includes/minishell.h"
 
-static void	read_content(t_subtokenlist *currcmd, int tmpfd)
+static void	read_content(t_subtokenlist *currcmd, int tmpfd, char **envp)
 {
 	char	*name;
 	char	*input;
 
 	name = ft_strjoin(currcmd->head->subtoken, "\n", "");
 	input = readline("docs> ");
-	while (1)
+	while (global_sig == 0)
 	{
 		if (!ft_strncmp(input, name, ft_strlen(input)))
 			break ;
@@ -30,9 +30,11 @@ static void	read_content(t_subtokenlist *currcmd, int tmpfd)
 	}
 	free(name);
 	free(input);
+	if (global_sig == SIGINT)
+		update_exit_status(envp, 130);
 }
 
-char	*create_tmpfile(t_subtokenlist *currcmd)
+char	*create_tmpfile(t_subtokenlist *currcmd, char **envp)
 {
 	static int	count;
 	char		*numb;
@@ -50,7 +52,7 @@ char	*create_tmpfile(t_subtokenlist *currcmd)
 		free(name);
 		exit(-1);
 	}
-	read_content(currcmd, tmpfd);
+	read_content(currcmd, tmpfd, envp);
 	close(tmpfd);
 	return (name);
 }

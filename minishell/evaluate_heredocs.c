@@ -6,13 +6,13 @@
 /*   By: ychng <ychng@student.42kl.edu.my>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/01 02:10:05 by ychng             #+#    #+#             */
-/*   Updated: 2024/04/02 01:33:29 by ychng            ###   ########.fr       */
+/*   Updated: 2024/04/06 04:40:10 by ychng            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "includes/minishell.h"
 
-static void	expand_heredocs(t_subtokenlist **currcmd)
+static void	expand_heredocs(t_subtokenlist **currcmd, char **envp)
 {
 	t_subtokenlist	*result;
 	char			*heredoc;
@@ -28,7 +28,7 @@ static void	expand_heredocs(t_subtokenlist **currcmd)
 		{
 			free_subtokennode(pop_subtokenlist_head(*currcmd));
 			count++;
-			heredoc = create_tmpfile(*currcmd);
+			heredoc = create_tmpfile(*currcmd, envp);
 			manage_heredoc(result, heredoc, heredoc_count, count);
 			free_subtokennode(pop_subtokenlist_head(*currcmd));
 		}
@@ -39,12 +39,12 @@ static void	expand_heredocs(t_subtokenlist **currcmd)
 	*currcmd = result;
 }
 
-void	evaluate_heredocs(t_treenode *root)
+void	evaluate_heredocs(t_treenode *root, char **envp)
 {
 	if (root == NULL)
 		return ;
 	if (root->left == NULL && root->right == NULL)
-		expand_heredocs(&root->token->subtokenlist);
-	evaluate_heredocs(root->left);
-	evaluate_heredocs(root->right);
+		expand_heredocs(&root->token->subtokenlist, envp);
+	evaluate_heredocs(root->left, envp);
+	evaluate_heredocs(root->right, envp);
 }

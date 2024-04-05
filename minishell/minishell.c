@@ -6,7 +6,7 @@
 /*   By: ychng <ychng@student.42kl.edu.my>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/17 17:56:25 by ychng             #+#    #+#             */
-/*   Updated: 2024/04/06 04:32:06 by ychng            ###   ########.fr       */
+/*   Updated: 2024/04/06 04:39:57 by ychng            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,7 +94,7 @@ int	main(int argc, char **argv, char **envp)
 		input = read_inputline(envp);
 		tokenlist = get_tokenlist(input, envp);
 		root = build_tree(tokenlist);
-		evaluate_heredocs(root);
+		evaluate_heredocs(root, envp);
 		evaluate_tree(root, &envp);
 		free(input);
 		free_tokenlist(tokenlist);
