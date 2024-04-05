@@ -6,7 +6,7 @@
 /*   By: ychng <ychng@student.42kl.edu.my>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/02 01:19:34 by ychng             #+#    #+#             */
-/*   Updated: 2024/04/02 01:36:27 by ychng            ###   ########.fr       */
+/*   Updated: 2024/04/06 04:15:44 by ychng            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,22 +15,21 @@
 static void	read_content(t_subtokenlist *currcmd, int tmpfd)
 {
 	char	*name;
-	char	*readline;
+	char	*input;
 
 	name = ft_strjoin(currcmd->head->subtoken, "\n", "");
-	write(STDIN_FILENO, "docs> ", 7);
-	readline = get_next_line(STDIN_FILENO);
+	input = readline("docs> ");
 	while (1)
 	{
-		if (!ft_strncmp(readline, name, ft_strlen(readline)))
+		if (!ft_strncmp(input, name, ft_strlen(input)))
 			break ;
-		write(tmpfd, readline, ft_strlen(readline));
-		free(readline);
-		write(STDIN_FILENO, "docs> ", 7);
-		readline = get_next_line(STDIN_FILENO);
+		write(tmpfd, input, ft_strlen(input));
+		write(tmpfd, "\n", 1);
+		free(input);
+		input = readline("docs> ");
 	}
 	free(name);
-	free(readline);
+	free(input);
 }
 
 char	*create_tmpfile(t_subtokenlist *currcmd)
