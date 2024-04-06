@@ -6,7 +6,7 @@
 /*   By: ychng <ychng@student.42kl.edu.my>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/31 05:13:24 by ychng             #+#    #+#             */
-/*   Updated: 2024/04/06 16:17:42 by ychng            ###   ########.fr       */
+/*   Updated: 2024/04/06 16:24:33 by ychng            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,7 +108,13 @@ int	run_execve(char **envp, t_subtokenlist *currcmd)
 	bin = find_full_bin_path(args[0], envp);
 	if (bin == NULL)
 	{
-		if (args[0][0] == '\0')
+		if (!ft_strcmp(args[0], "."))
+			printf("%s: filename argument required\n", args[0]);
+		else if (ft_strchr(args[0], '/') && !has_alpha(args[0]))
+			printf("%s: is a directory\n", args[0]);
+		else if (ft_strchr(args[0], '/'))
+			printf("%s: No such file or directory\n", args[0]);
+		else if (ft_strlen(args[0]) == 0)
 			printf("\'\': command not found\n");
 		else
 			printf("%s: command not found\n", args[0]);
