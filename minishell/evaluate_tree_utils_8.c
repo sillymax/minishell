@@ -6,7 +6,7 @@
 /*   By: ychng <ychng@student.42kl.edu.my>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/31 05:13:24 by ychng             #+#    #+#             */
-/*   Updated: 2024/04/06 16:24:33 by ychng            ###   ########.fr       */
+/*   Updated: 2024/04/06 16:31:32 by ychng            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,42 +41,13 @@ static char	**currcmd_to_2d_array(t_subtokenlist *currcmd)
 	return (result);
 }
 
-bool	has_alpha(char *str)
-{
-	while (*str)
-	{
-		if ((*str >= 'a' && *str <= 'z') \
-			|| (*str >= 'A' && *str <= 'Z'))
-			return (true);
-		str++;
-	}
-	return (false);
-}
-
-// if its a directory it will return false
-// if its an executable it will return true
-// if opendirdir can open, means it's directory
-bool	is_executable(char *full_path)
-{
-	DIR	*dp;
-
-	dp = opendir(full_path);
-	if (dp != NULL)
-	{
-		closedir(dp);
-		return (false);
-	}
-	return (true);
-}
-
 static char	*find_full_bin_path(char *bin, char **envp)
 {
 	int		i;
 	char	*path;
 	char	*full_path;
 
-	if (*bin == '\0' || !ft_strcmp(bin, ".") || !ft_strcmp(bin, "..") \
-		|| !ft_strcmp(bin, "/") || !has_alpha(bin))
+	if (is_invalid_filename(bin))
 		return (NULL);
 	i = -1;
 	while (envp[++i])

@@ -6,7 +6,7 @@
 /*   By: ychng <ychng@student.42kl.edu.my>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/20 16:55:40 by ychng             #+#    #+#             */
-/*   Updated: 2024/04/06 04:38:14 by ychng            ###   ########.fr       */
+/*   Updated: 2024/04/06 16:31:45 by ychng            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -395,6 +395,11 @@ bool			is_builtins(t_subtokenlist *currcmd);
 
 // evaluate_tree_utils_8.c
 int				run_execve(char **envp, t_subtokenlist *currcmd);
+
+// evaluate_tree_utils_9.c
+bool			has_alpha(char *str);
+bool			is_invalid_filename(char *bin);
+bool			is_executable(char *full_path);
 
 // evaluate_tree.c
 bool			evaluate_tree(t_treenode *root, char ***envp);
