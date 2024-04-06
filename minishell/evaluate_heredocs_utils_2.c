@@ -6,12 +6,14 @@
 /*   By: ychng <ychng@student.42kl.edu.my>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/02 01:19:34 by ychng             #+#    #+#             */
-/*   Updated: 2024/04/06 04:56:26 by ychng            ###   ########.fr       */
+/*   Updated: 2024/04/06 17:35:35 by ychng            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "includes/minishell.h"
 
+// Didn't expand escaped cause need to remeber last input
+// example \\\n if the n is on new line
 static void	read_content(t_subtokenlist *currcmd, int tmpfd, char **envp)
 {
 	char	*name;
@@ -23,6 +25,7 @@ static void	read_content(t_subtokenlist *currcmd, int tmpfd, char **envp)
 	{
 		if (!ft_strncmp(input, name, ft_strlen(input)))
 			break ;
+		input = expand_env(input, envp);
 		write(tmpfd, input, ft_strlen(input));
 		write(tmpfd, "\n", 1);
 		free(input);
