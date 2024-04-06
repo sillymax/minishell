@@ -6,7 +6,7 @@
 /*   By: ychng <ychng@student.42kl.edu.my>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/31 05:13:24 by ychng             #+#    #+#             */
-/*   Updated: 2024/04/05 22:36:16 by ychng            ###   ########.fr       */
+/*   Updated: 2024/04/06 16:08:05 by ychng            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,16 +41,27 @@ static char	**currcmd_to_2d_array(t_subtokenlist *currcmd)
 	return (result);
 }
 
+bool	has_alpha(char *str)
+{
+	while (*str)
+	{
+		if ((*str >= 'a' && *str <= 'z') \
+			|| (*str >= 'A' && *str <= 'Z'))
+			return (true);
+		str++;
+	}
+	return (false);
+}
+
 static char	*find_full_bin_path(char *bin, char **envp)
 {
 	int		i;
 	char	*path;
 	char	*full_path;
 
-	if (*bin == '\0')
+	if (*bin == '\0' || !ft_strcmp(bin, ".") || !ft_strcmp(bin, "..") \
+		|| !ft_strcmp(bin, "/") || !has_alpha(bin))
 		return (NULL);
-	if (is_forwardslash(*bin) && access(bin, F_OK) == 0)
-		return (bin);
 	i = -1;
 	while (envp[++i])
 	{
@@ -59,8 +70,11 @@ static char	*find_full_bin_path(char *bin, char **envp)
 		path = ft_strtok(envp[i] + 5, ":");
 		while (path)
 		{
-			full_path = ft_strjoin(path, bin, "/");
-			if (access(full_path, F_OK) == 0)
+			if (bin[0] == '.' || bin[0] == '/')
+				full_path = ft_strjoin(bin, "", "");
+			else
+				full_path = ft_strjoin(path, bin, "/");
+			if (access(full_path, X_OK) == 0)
 				return (full_path);
 			free(full_path);
 			path = ft_strtok(NULL, ":");
