@@ -6,7 +6,7 @@
 /*   By: ychng <ychng@student.42kl.edu.my>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/31 05:13:24 by ychng             #+#    #+#             */
-/*   Updated: 2024/04/06 16:08:05 by ychng            ###   ########.fr       */
+/*   Updated: 2024/04/06 16:17:42 by ychng            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,6 +53,22 @@ bool	has_alpha(char *str)
 	return (false);
 }
 
+// if its a directory it will return false
+// if its an executable it will return true
+// if opendirdir can open, means it's directory
+bool	is_executable(char *full_path)
+{
+	DIR	*dp;
+
+	dp = opendir(full_path);
+	if (dp != NULL)
+	{
+		closedir(dp);
+		return (false);
+	}
+	return (true);
+}
+
 static char	*find_full_bin_path(char *bin, char **envp)
 {
 	int		i;
@@ -74,7 +90,7 @@ static char	*find_full_bin_path(char *bin, char **envp)
 				full_path = ft_strjoin(bin, "", "");
 			else
 				full_path = ft_strjoin(path, bin, "/");
-			if (access(full_path, X_OK) == 0)
+			if (is_executable(full_path) && access(full_path, X_OK) == 0)
 				return (full_path);
 			free(full_path);
 			path = ft_strtok(NULL, ":");
