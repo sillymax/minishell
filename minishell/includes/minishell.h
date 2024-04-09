@@ -6,7 +6,7 @@
 /*   By: ychng <ychng@student.42kl.edu.my>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/20 16:55:40 by ychng             #+#    #+#             */
-/*   Updated: 2024/04/09 14:18:23 by ychng            ###   ########.fr       */
+/*   Updated: 2024/04/09 16:20:55 by ychng            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -230,13 +230,16 @@ int				dup_nullfd(char *input);
 char			*trim_errorpart(char *input);
 
 // read_inputline_utils_6.c
-int				validlen(char *token, int *openbrackets);
-int				validlenredir(char *token);
+char			*process_token(char *input, int *joinedlen);
 char			*extract_heredoc(char *input, int joinedlen);
 
 // read_inputline_utils_7.c
-char			*format_joininput(char *joininput);
+int				check_error_conditions(char *token, int *joinedlen, \
+									int opens[]);
 char			*alloc_joinedtokens(char *input, int joinedlen);
+
+// read_inputline_utils_8.c
+char			*format_joininput(char *joininput);
 
 // read_inputline_helper.c
 char			*closequotes(char *input, char **envp);
@@ -371,6 +374,7 @@ void			handle_lastcmd(char ***envp, int prev_pipefd[], \
 // evaluate_tree_utils_3.c
 int				get_redirfd(char ***envp, int *infilefd, int *outfilefd, \
 							t_subtokenlist **currcmd);
+void			init_origio(int *origstdin, int *origstdout);
 void			restore_originalfd(int origstdin, int origstdout);
 pid_t			create_fork(void);
 

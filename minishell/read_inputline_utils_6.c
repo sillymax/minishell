@@ -5,61 +5,33 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: ychng <ychng@student.42kl.edu.my>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/03/27 01:20:16 by ychng             #+#    #+#             */
-/*   Updated: 2024/04/09 14:27:48 by ychng            ###   ########.fr       */
+/*   Created: 2024/04/09 15:56:14 by ychng             #+#    #+#             */
+/*   Updated: 2024/04/09 15:59:21 by ychng            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "includes/minishell.h"
 
-int	validlen(char *token, int *openbrackets)
+// in opens is
+// int	openlogicalops;
+// int	openbrackets;
+// int	openredirs;
+char	*process_token(char *input, int *joinedlen)
 {
-	char	*start;
+	int		opens[3];
+	char	*token;
 
-	token += ft_strspn(token, " ");
-	start = token;
-	while (*token)
+	ft_bzero(opens, sizeof(int) * 3);
+	token = get_next_token(input, false);
+	while (token)
 	{
-		if (((start == token) || *openbrackets > 0) && is_leftbracket(*token))
-			(*openbrackets)++;
-		else if (((start != token) && *openbrackets > 0) \
-				&& is_rightbracket(*token))
-			(*openbrackets)--;
-		else if (((start == token) && is_rightbracket(*token)) \
-			|| ((start != token) && is_bracket(*token)))
+		if (check_error_conditions(token, joinedlen, opens) > 0)
 			break ;
-		token++;
+		*joinedlen += ft_strlen(token);
+		free(token);
+		token = get_next_token(NULL, false);
 	}
-	return (token - start);
-}
-
-int	validlenredir(char *token)
-{
-	char		*start;
-	char		*lastredir;
-	int			openredirs;
-
-	openredirs = 0;
-	start = token;
-	while (*token)
-	{
-		if (is_redirection_n(token) && (openredirs == 0))
-		{
-			lastredir = token;
-			openredirs++;
-			token += redirlen(token);
-			continue ;
-		}
-		else if (!is_space(*token) && (openredirs > 0) \
-				&& is_notvalidname(token))
-			return (lastredir - start);
-		else if (!is_space(*token) && (openredirs > 0))
-			openredirs--;
-		token++;
-	}
-	if (openredirs > 0)
-		return (lastredir - start);
-	return (token - start);
+	return (token);
 }
 
 char	*extract_heredoc(char *input, int joinedlen)
@@ -90,25 +62,3 @@ char	*extract_heredoc(char *input, int joinedlen)
 	}
 	return (free(joinedtokens), result);
 }
-
-// bool	empty_bracket(char *input)
-// {
-// 	char	*innermost_adr;
-// 	int		i;
-
-// 	innermost_adr = ft_rstrchr(input, ')');
-// 	if (innermost_adr == NULL)
-// 		return (false);
-// 	i = innermost_adr - input;
-// 	while (--i > 0)
-// 	{
-// 		if (is_leftbracket(input[i]) || !is_space(input[i]))
-// 			break ;
-// 	}
-// 	if (is_leftbracket(input[i]))
-// 	{
-// 		printf("syntax error near unexpected token `)'\n");
-// 		return (true);
-// 	}
-// 	return (false);
-// }

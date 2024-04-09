@@ -6,7 +6,7 @@
 /*   By: ychng <ychng@student.42kl.edu.my>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/25 01:20:21 by ychng             #+#    #+#             */
-/*   Updated: 2024/04/09 14:14:07 by ychng            ###   ########.fr       */
+/*   Updated: 2024/04/09 15:01:24 by ychng            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,21 @@ char	*closequotes(char *input, char **envp)
 	return (input);
 }
 
+static char	*process_input(char *input, char *joininput, char **envp)
+{
+	char	*triminput;
+
+	triminput = ft_strtrim(input, "\n");
+	free(input);
+	input = triminput;
+	if (*joininput != '\0')
+		input = custom_strjoin(input, " ");
+	input = custom_strjoin(input, joininput);
+	input = closequotes(input, envp);
+	free(joininput);
+	return (input);
+}
+
 char	*closebrackets(char *input, char **envp)
 {
 	char	*joininput;
@@ -57,14 +72,7 @@ char	*closebrackets(char *input, char **envp)
 			g_sig = 0;
 			update_exit_status(envp, 130);
 		}
-		triminput = ft_strtrim(input, "\n");
-		free(input);
-		input = triminput;
-		if (*joininput != '\0')
-			input = custom_strjoin(input, " ");
-		input = custom_strjoin(input, joininput);
-		input = closequotes(input, envp);
-		free(joininput);
+		input = process_input(input, joininput, envp);
 	}
 	return (input);
 }

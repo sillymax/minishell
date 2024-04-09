@@ -6,7 +6,7 @@
 /*   By: ychng <ychng@student.42kl.edu.my>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/29 15:22:33 by ychng             #+#    #+#             */
-/*   Updated: 2024/04/02 21:32:13 by ychng            ###   ########.fr       */
+/*   Updated: 2024/04/09 15:57:45 by ychng            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,39 +42,10 @@ int	dup_nullfd(char *input)
 
 char	*trim_errorpart(char *input)
 {
-	int		openlogicalops;
-	int		openbrackets;
-	int		openredirs;
 	int		joinedlen;
 	char	*token;
 
-	openlogicalops = 0;
-	openbrackets = 0;
-	openredirs = 0;
 	joinedlen = 0;
-	token = get_next_token(input, false);
-	while (token)
-	{
-		if (has_logicaloperr(token, &openlogicalops))
-		{
-			free(token);
-			break ;
-		}
-		else if (has_bracketerr(token, &openbrackets))
-		{
-			joinedlen += validlen(token, &openbrackets);
-			free(token);
-			break ;
-		}
-		else if (has_redirerr(token, &openredirs) || openredirs > 0)
-		{
-			joinedlen += validlenredir(token);
-			free(token);
-			break ;
-		}
-		joinedlen += ft_strlen(token);
-		free(token);
-		token = get_next_token(NULL, false);
-	}
+	token = process_token(input, &joinedlen);
 	return (extract_heredoc(input, joinedlen));
 }
