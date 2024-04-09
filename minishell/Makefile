@@ -8,6 +8,7 @@ SYS_HEADERS_PATH := ../
 LIBFT_PATH := ../libft/
 OBJS_PATH := ./objs/
 BUILTINS_PATH := ./builtins/
+HEREDOCS_PATH := ./heredocs/
 
 # Source files
 SRCS := global.c \
@@ -101,6 +102,9 @@ SRCS_OBJS := $(addprefix $(OBJS_PATH), $(SRCS:.c=.o))
 BUILTINS_OBJS := $(addprefix $(OBJS_PATH), $(BUILTINS_SRCS:.c=.o))
 OBJS := $(SRCS_OBJS) $(BUILTINS_OBJS)
 
+# Heredocs files
+TMPS_TXT := $(wildcard $(HEREDOCS_PATH)*.txt);
+
 # Run the make tool in another directory
 LIBFT_MAKE := $(MAKE) -C$(LIBFT_PATH)
 
@@ -138,7 +142,7 @@ $(OBJS_PATH)%.o: $(BUILTINS_PATH)%.c
 # Remove all object files
 clean:
 	@$(LIBFT_MAKE) clean
-	@$(RM) $(RMFLAGS) $(OBJS)
+	@$(RM) $(RMFLAGS) $(OBJS) $(TMPS_TXT)
 
 # Remove all generated files
 fclean: clean
