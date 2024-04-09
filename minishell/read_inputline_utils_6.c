@@ -6,7 +6,7 @@
 /*   By: ychng <ychng@student.42kl.edu.my>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/09 15:56:14 by ychng             #+#    #+#             */
-/*   Updated: 2024/04/09 15:59:21 by ychng            ###   ########.fr       */
+/*   Updated: 2024/04/09 16:38:00 by ychng            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 // int	openlogicalops;
 // int	openbrackets;
 // int	openredirs;
-char	*process_token(char *input, int *joinedlen)
+void	process_token(char *input, int *joinedlen)
 {
 	int		opens[3];
 	char	*token;
@@ -31,7 +31,6 @@ char	*process_token(char *input, int *joinedlen)
 		free(token);
 		token = get_next_token(NULL, false);
 	}
-	return (token);
 }
 
 char	*extract_heredoc(char *input, int joinedlen)

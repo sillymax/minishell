@@ -6,7 +6,7 @@
 /*   By: ychng <ychng@student.42kl.edu.my>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/20 16:55:40 by ychng             #+#    #+#             */
-/*   Updated: 2024/04/09 16:26:32 by ychng            ###   ########.fr       */
+/*   Updated: 2024/04/09 16:39:02 by ychng            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -230,7 +230,7 @@ int				dup_nullfd(char *input);
 char			*trim_errorpart(char *input);
 
 // read_inputline_utils_6.c
-char			*process_token(char *input, int *joinedlen);
+void			process_token(char *input, int *joinedlen);
 char			*extract_heredoc(char *input, int joinedlen);
 
 // read_inputline_utils_7.c
