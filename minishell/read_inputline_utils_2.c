@@ -6,35 +6,46 @@
 /*   By: ychng <ychng@student.42kl.edu.my>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/29 15:50:22 by ychng             #+#    #+#             */
-/*   Updated: 2024/03/29 15:52:55 by ychng            ###   ########.fr       */
+/*   Updated: 2024/04/10 00:54:59 by ychng            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "includes/minishell.h"
 
-int	redirlen(char *token)
+void	init_val(bool *escaped, bool *inquote, char *quote_type)
 {
-	if (ft_strncmp(token, "<<<", 3) == 0)
-		return (3);
-	if (ft_strncmp(token, "<<", 2) == 0
-		|| (ft_strncmp(token, ">>", 2) == 0))
-		return (2);
-	if (ft_strncmp(token, "<", 1) == 0
-		|| (ft_strncmp(token, ">", 1) == 0)
-		|| (ft_strncmp(token, "|", 1) == 0))
-		return (1);
-	return (0);
+	*escaped = false;
+	*inquote = false;
+	*quote_type = '\0';
 }
 
-bool	is_notvalidname(char *token)
+bool	handle_redirection(char *token, int *openredir)
 {
-	char	*subtoken;
-
-	if (is_redirection_n(token))
+	if ((*openredir == 0) && is_redirection_n(token))
 	{
-		subtoken = get_next_subtoken(token);
-		printf("syntax error near unexpected token `%s'\n", subtoken);
-		free(subtoken);
+		token += redirlen(token);
+		(*openredir)++;
+		return (true);
+	}
+	return (false);
+}
+
+bool	handle_notvalidname(char *token, int *openredir)
+{
+	if ((*openredir > 0) && !is_space(*token))
+	{
+		if (is_notvalidname(token))
+			return (true);
+		(*openredir)--;
+	}
+	return (false);
+}
+
+bool	check_syntaxerror(char *token, int *openredir)
+{
+	if ((*openredir > 0) && is_logicalop(token))
+	{
+		printf("syntax error near unexpected token `%s'\n", token);
 		return (true);
 	}
 	return (false);

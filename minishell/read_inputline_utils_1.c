@@ -6,7 +6,7 @@
 /*   By: ychng <ychng@student.42kl.edu.my>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/27 01:39:11 by ychng             #+#    #+#             */
-/*   Updated: 2024/03/29 16:27:59 by ychng            ###   ########.fr       */
+/*   Updated: 2024/04/10 00:41:20by ychng            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,29 +56,29 @@ bool	has_bracketerr(char *token, int *openbrackets)
 
 bool	has_redirerr(char *token, int *openredir)
 {
+	bool	escaped;
+	bool	inquote;
+	char	quote_type;
+
+	init_val(&escaped, &inquote, &quote_type);
 	while (*token && !is_logicalop(token))
 	{
-		if (is_redirection_n(token) && (*openredir == 0))
+		if (!escaped && !is_singquote(quote_type) && is_backslash(*token))
+			escaped = true;
+		else if (!escaped && is_quote(*token))
+			toggle_inquote(*token, &inquote, &quote_type);
+		else if (!escaped && !inquote)
 		{
-			token += redirlen(token);
-			(*openredir)++;
-			continue ;
-		}
-		else if (!is_space(*token) && (*openredir > 0))
-		{
-			if (is_notvalidname(token))
+			if (handle_redirection(token, openredir))
+				continue ;
+			else if (handle_notvalidname(token, openredir))
 				return (true);
-			else
-				(*openredir)--;
 		}
+		else
+			escaped = false;
 		token++;
 	}
-	if (is_logicalop(token) && (*openredir > 0))
-	{
-		printf("syntax error near unexpected token `%s'\n", token);
-		return (true);
-	}
-	return (false);
+	return (check_syntaxerror(token, openredir));
 }
 
 bool	has_noerror(char *input)

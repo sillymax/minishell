@@ -6,7 +6,7 @@
 /*   By: ychng <ychng@student.42kl.edu.my>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/20 16:55:40 by ychng             #+#    #+#             */
-/*   Updated: 2024/04/09 16:39:02 by ychng            ###   ########.fr       */
+/*   Updated: 2024/04/10 01:00:16 by ychng            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -210,35 +210,41 @@ bool			has_redirerr(char *token, int *openredir);
 bool			has_noerror(char *input);
 
 // read_inputline_utils_2.c
+void        	init_val(bool *escaped, bool *inquote, char *quote_type);
+bool        	handle_redirection(char *token, int *openredir);
+bool        	handle_notvalidname(char *token, int *openredir);
+bool        	check_syntaxerror(char *token, int *openredir);
+
+// read_inputline_utils_3.c
 int				redirlen(char *token);
 bool			is_notvalidname(char *token);
 
-// read_inputline_utils_3.c
+// read_inputline_utils_4.c
 bool			has_openquotes(char *input);
 bool			has_openbrackets(char *input);
 bool			has_openlogicalops(char *input);
 bool			has_openblock(char *input);
 
-// read_inputline_utils_4.c
+// read_inputline_utils_5.c
 bool			is_validpos(char *start, char *input);
 int				update_open_count(char c);
 int				set_inoperator_true(bool *inoperator);
 
-// read_inputline_utils_5.c
+// read_inputline_utils_6.c
 int				dup_stdoutfd(char *input);
 int				dup_nullfd(char *input);
 char			*trim_errorpart(char *input);
 
-// read_inputline_utils_6.c
+// read_inputline_utils_7.c
 void			process_token(char *input, int *joinedlen);
 char			*extract_heredoc(char *input, int joinedlen);
 
-// read_inputline_utils_7.c
+// read_inputline_utils_8.c
 int				check_error_conditions(char *token, int *joinedlen, \
 									int opens[]);
 char			*alloc_joinedtokens(char *input, int joinedlen);
 
-// read_inputline_utils_8.c
+// read_inputline_utils_9.c
 char			*format_joininput(char *joininput);
 
 // read_inputline_helper.c

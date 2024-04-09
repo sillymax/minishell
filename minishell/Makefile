@@ -38,6 +38,7 @@ SRCS := global.c \
 		read_inputline_utils_6.c \
 		read_inputline_utils_7.c \
 		read_inputline_utils_8.c \
+		read_inputline_utils_9.c \
 		read_inputline_helper.c \
 		read_inputline.c \
 		expand_env_utils_1.c \

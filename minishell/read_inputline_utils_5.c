@@ -5,46 +5,50 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: ychng <ychng@student.42kl.edu.my>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/03/29 15:22:33 by ychng             #+#    #+#             */
-/*   Updated: 2024/04/09 16:37:37 by ychng            ###   ########.fr       */
+/*   Created: 2024/03/24 06:09:32 by ychng             #+#    #+#             */
+/*   Updated: 2024/04/10 00:54:05 by ychng            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "includes/minishell.h"
 
-int	dup_stdoutfd(char *input)
+bool	is_validpos(char *start, char *input)
 {
-	int	stdoutfd;
+	bool	inoperator;
 
-	stdoutfd = dup(STDOUT_FILENO);
-	if (stdoutfd == -1)
+	inoperator = false;
+	start += ft_strspn(start, " ");
+	if (start == input)
+		return (true);
+	while (*start)
 	{
-		printf("dup failed for stdoutfd\n");
-		free(input);
-		exit(-1);
+		if (!inoperator && is_logicalop_n(start))
+		{
+			inoperator = true;
+			start++;
+		}
+		else if (inoperator && !is_space(*start))
+		{
+			if (is_leftbracket(*start))
+				return (true);
+			break ;
+		}
+		start++;
 	}
-	return (stdoutfd);
+	return (false);
 }
 
-int	dup_nullfd(char *input)
+int	update_open_count(char c)
 {
-	int	nullfd;
-
-	nullfd = open("/dev/null", O_WRONLY);
-	if (nullfd == -1)
-	{
-		printf("open failed for nullfd\n");
-		free(input);
-		exit(-1);
-	}
-	return (nullfd);
+	if (is_leftbracket(c))
+		return (1);
+	if (is_rightbracket(c))
+		return (-1);
+	return (0);
 }
 
-char	*trim_errorpart(char *input)
+int	set_inoperator_true(bool *inoperator)
 {
-	int		joinedlen;
-
-	joinedlen = 0;
-	process_token(input, &joinedlen);
-	return (extract_heredoc(input, joinedlen));
+	*inoperator = true;
+	return (1);
 }

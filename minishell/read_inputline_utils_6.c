@@ -5,59 +5,46 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: ychng <ychng@student.42kl.edu.my>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/04/09 15:56:14 by ychng             #+#    #+#             */
-/*   Updated: 2024/04/09 16:38:00 by ychng            ###   ########.fr       */
+/*   Created: 2024/03/29 15:22:33 by ychng             #+#    #+#             */
+/*   Updated: 2024/04/10 00:53:56 by ychng            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "includes/minishell.h"
 
-// in opens is
-// int	openlogicalops;
-// int	openbrackets;
-// int	openredirs;
-void	process_token(char *input, int *joinedlen)
+int	dup_stdoutfd(char *input)
 {
-	int		opens[3];
-	char	*token;
+	int	stdoutfd;
 
-	ft_bzero(opens, sizeof(int) * 3);
-	token = get_next_token(input, false);
-	while (token)
+	stdoutfd = dup(STDOUT_FILENO);
+	if (stdoutfd == -1)
 	{
-		if (check_error_conditions(token, joinedlen, opens) > 0)
-			break ;
-		*joinedlen += ft_strlen(token);
-		free(token);
-		token = get_next_token(NULL, false);
+		printf("dup failed for stdoutfd\n");
+		free(input);
+		exit(-1);
 	}
+	return (stdoutfd);
 }
 
-char	*extract_heredoc(char *input, int joinedlen)
+int	dup_nullfd(char *input)
 {
-	char	*joinedtokens;
-	char	*subtoken;
-	char	*result;
-	int		openheredoc;
+	int	nullfd;
 
-	joinedtokens = alloc_joinedtokens(input, joinedlen);
-	result = NULL;
-	openheredoc = 0;
-	subtoken = get_next_subtoken(joinedtokens);
-	while (subtoken)
+	nullfd = open("/dev/null", O_WRONLY);
+	if (nullfd == -1)
 	{
-		if (openheredoc == 0 && is_heredoc(subtoken))
-		{
-			openheredoc++;
-			result = custom_strjoin(result, subtoken);
-		}
-		else if (openheredoc > 0)
-		{
-			openheredoc--;
-			result = custom_strjoin(result, subtoken);
-		}
-		free(subtoken);
-		subtoken = get_next_subtoken(NULL);
+		printf("open failed for nullfd\n");
+		free(input);
+		exit(-1);
 	}
-	return (free(joinedtokens), result);
+	return (nullfd);
+}
+
+char	*trim_errorpart(char *input)
+{
+	int		joinedlen;
+
+	joinedlen = 0;
+	process_token(input, &joinedlen);
+	return (extract_heredoc(input, joinedlen));
 }
