@@ -6,7 +6,7 @@
 /*   By: ychng <ychng@student.42kl.edu.my>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/31 04:51:00 by ychng             #+#    #+#             */
-/*   Updated: 2024/04/09 15:20:46 by ychng            ###   ########.fr       */
+/*   Updated: 2024/04/09 16:27:10 by ychng            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,13 +43,12 @@ void	handle_lastcmd(char ***envp, int prev_pipefd[], \
 {
 	int				infilefd;
 	int				outfilefd;
-	int				origstdin;
-	int				origstdout;
+	int				origio[2];
 	int				exitcode;
 
 	if (get_redirfd(envp, &infilefd, &outfilefd, currcmd) == -1)
 		return ;
-	init_origio(&origstdin, &origstdout);
+	init_origio(origio);
 	manage_lastcmdredir(infilefd, outfilefd);
 	if (prev_pipefd[0] == 0 && is_builtins(*currcmd))
 	{
@@ -66,5 +65,5 @@ void	handle_lastcmd(char ***envp, int prev_pipefd[], \
 		else
 			handle_lastcmd_parent(prev_pipefd);
 	}
-	restore_originalfd(origstdin, origstdout);
+	restore_originalfd(origio[0], origio[1]);
 }

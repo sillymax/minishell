@@ -6,7 +6,7 @@
 /*   By: ychng <ychng@student.42kl.edu.my>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/20 16:55:40 by ychng             #+#    #+#             */
-/*   Updated: 2024/04/09 16:20:55 by ychng            ###   ########.fr       */
+/*   Updated: 2024/04/09 16:26:32 by ychng            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -374,7 +374,7 @@ void			handle_lastcmd(char ***envp, int prev_pipefd[], \
 // evaluate_tree_utils_3.c
 int				get_redirfd(char ***envp, int *infilefd, int *outfilefd, \
 							t_subtokenlist **currcmd);
-void			init_origio(int *origstdin, int *origstdout);
+void			init_origio(int origio[]);
 void			restore_originalfd(int origstdin, int origstdout);
 pid_t			create_fork(void);
 

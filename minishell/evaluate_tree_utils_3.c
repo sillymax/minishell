@@ -6,7 +6,7 @@
 /*   By: ychng <ychng@student.42kl.edu.my>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/31 04:51:03 by ychng             #+#    #+#             */
-/*   Updated: 2024/04/09 15:20:57 by ychng            ###   ########.fr       */
+/*   Updated: 2024/04/09 16:26:05 by ychng            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,10 +36,10 @@ int	get_redirfd(char ***envp, int *infilefd, int *outfilefd, \
 	return (0);
 }
 
-void	init_origio(int *origstdin, int *origstdout)
+void	init_origio(int origio[])
 {
-	*origstdin = dup(STDIN_FILENO);
-	*origstdout = dup(STDOUT_FILENO);
+	origio[0] = dup(STDIN_FILENO);
+	origio[1] = dup(STDOUT_FILENO);
 }
 
 void	restore_originalfd(int origstdin, int origstdout)
