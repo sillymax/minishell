@@ -6,7 +6,7 @@
 /*   By: ychng <ychng@student.42kl.edu.my>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/20 16:55:40 by ychng             #+#    #+#             */
-/*   Updated: 2024/04/09 14:14:07 by ychng            ###   ########.fr       */
+/*   Updated: 2024/04/09 14:18:23 by ychng            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -236,6 +236,7 @@ char			*extract_heredoc(char *input, int joinedlen);
 
 // read_inputline_utils_7.c
 char			*format_joininput(char *joininput);
+char			*alloc_joinedtokens(char *input, int joinedlen);
 
 // read_inputline_helper.c
 char			*closequotes(char *input, char **envp);

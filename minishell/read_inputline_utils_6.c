@@ -6,7 +6,7 @@
 /*   By: ychng <ychng@student.42kl.edu.my>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/27 01:20:16 by ychng             #+#    #+#             */
-/*   Updated: 2024/04/02 21:15:49 by ychng            ###   ########.fr       */
+/*   Updated: 2024/04/09 14:27:48 by ychng            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,13 +50,11 @@ int	validlenredir(char *token)
 			token += redirlen(token);
 			continue ;
 		}
+		else if (!is_space(*token) && (openredirs > 0) \
+				&& is_notvalidname(token))
+			return (lastredir - start);
 		else if (!is_space(*token) && (openredirs > 0))
-		{
-			if (is_notvalidname(token))
-				return (lastredir - start);
-			else
-				openredirs--;
-		}
+			openredirs--;
 		token++;
 	}
 	if (openredirs > 0)
@@ -71,13 +69,7 @@ char	*extract_heredoc(char *input, int joinedlen)
 	char	*result;
 	int		openheredoc;
 
-	joinedtokens = ft_strndup(input, joinedlen);
-	free(input);
-	if (!joinedtokens)
-	{
-		printf("ft_strndup failed for joinedtokens\n");
-		exit(-1);
-	}
+	joinedtokens = alloc_joinedtokens(input, joinedlen);
 	result = NULL;
 	openheredoc = 0;
 	subtoken = get_next_subtoken(joinedtokens);
@@ -96,8 +88,7 @@ char	*extract_heredoc(char *input, int joinedlen)
 		free(subtoken);
 		subtoken = get_next_subtoken(NULL);
 	}
-	free(joinedtokens);
-	return (result);
+	return (free(joinedtokens), result);
 }
 
 // bool	empty_bracket(char *input)
