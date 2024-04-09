@@ -6,7 +6,7 @@
 /*   By: ychng <ychng@student.42kl.edu.my>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/20 19:39:08 by ychng             #+#    #+#             */
-/*   Updated: 2024/04/09 14:14:07 by ychng            ###   ########.fr       */
+/*   Updated: 2024/04/10 01:07:06 by ychng            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,7 @@ static char	*handle_maininput(char **envp)
 		if (maininput == NULL)
 		{
 			printf("exit\n");
+			free_double_array(envp);
 			exit(-1);
 		}
 		if (g_sig == SIGINT)
