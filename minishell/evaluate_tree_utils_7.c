@@ -6,7 +6,7 @@
 /*   By: ychng <ychng@student.42kl.edu.my>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/31 05:02:36 by ychng             #+#    #+#             */
-/*   Updated: 2024/04/06 02:21:10 by ychng            ###   ########.fr       */
+/*   Updated: 2024/04/10 03:04:01 by ychng            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,8 @@ int	run_cmd(char ***envp, t_subtokenlist *currcmd)
 
 	if (currcmd->head == NULL)
 		return (0);
+	signal(SIGINT, SIG_DFL);
+	signal(SIGQUIT, SIG_DFL);
 	cmd = currcmd->head->subtoken;
 	args = currcmd->head->next;
 	if (!ft_strcmp(cmd, "echo"))
