@@ -6,10 +6,10 @@
 /*   By: ychng <ychng@student.42kl.edu.my>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/06 02:50:18 by ychng             #+#    #+#             */
-/*   Updated: 2024/04/06 02:50:34 by ychng            ###   ########.fr       */
+/*   Updated: 2024/04/09 14:14:07 by ychng            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "includes/minishell.h"
 
-int	global_sig;
+int	g_sig;

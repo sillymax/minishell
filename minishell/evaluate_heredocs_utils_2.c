@@ -6,7 +6,7 @@
 /*   By: ychng <ychng@student.42kl.edu.my>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/02 01:19:34 by ychng             #+#    #+#             */
-/*   Updated: 2024/04/06 17:35:35 by ychng            ###   ########.fr       */
+/*   Updated: 2024/04/09 14:14:07 by ychng            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ static void	read_content(t_subtokenlist *currcmd, int tmpfd, char **envp)
 
 	name = ft_strjoin(currcmd->head->subtoken, "\n", "");
 	input = readline("docs> ");
-	while (global_sig == 0)
+	while (g_sig == 0)
 	{
 		if (!ft_strncmp(input, name, ft_strlen(input)))
 			break ;
@@ -33,7 +33,7 @@ static void	read_content(t_subtokenlist *currcmd, int tmpfd, char **envp)
 	}
 	free(name);
 	free(input);
-	if (global_sig == SIGINT)
+	if (g_sig == SIGINT)
 		update_exit_status(envp, 130);
 }
 

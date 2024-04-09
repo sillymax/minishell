@@ -6,7 +6,7 @@
 /*   By: ychng <ychng@student.42kl.edu.my>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/27 01:32:23 by ychng             #+#    #+#             */
-/*   Updated: 2024/04/03 20:53:07 by ychng            ###   ########.fr       */
+/*   Updated: 2024/04/09 14:12:37 by ychng            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,8 @@ static t_subtokenlist	*get_subtokenlist(char *token, char **envp)
 		expand_heredoc = false;
 		while (subtoken)
 		{
-			subtoken = expand_subtoken(subtoken, expand_heredoc, envp, subtokenlist);
+			subtoken = expand_subtoken(subtoken, expand_heredoc, \
+										envp, subtokenlist);
 			if (is_heredoc(subtoken) || expand_heredoc == true)
 				expand_heredoc = !expand_heredoc;
 			link_subtokenlist(new_subtokennode(subtoken), subtokenlist);

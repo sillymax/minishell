@@ -6,7 +6,7 @@
 /*   By: ychng <ychng@student.42kl.edu.my>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/17 17:56:25 by ychng             #+#    #+#             */
-/*   Updated: 2024/04/06 04:39:57 by ychng            ###   ########.fr       */
+/*   Updated: 2024/04/09 14:14:07 by ychng            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,7 @@ void	sigint_handler(int sig)
 {
 	if (sig == SIGINT)
 	{
-		global_sig = sig;
+		g_sig = sig;
 		printf("\n");
 		rl_replace_line("", 0);
 		rl_on_new_line();

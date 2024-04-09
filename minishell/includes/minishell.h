@@ -6,7 +6,7 @@
 /*   By: ychng <ychng@student.42kl.edu.my>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/20 16:55:40 by ychng             #+#    #+#             */
-/*   Updated: 2024/04/06 16:31:45 by ychng            ###   ########.fr       */
+/*   Updated: 2024/04/09 14:14:07 by ychng            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ typedef struct s_treenode
 	struct s_treenode	*next;
 }	t_treenode;
 
-extern int	global_sig;
+extern int	g_sig;
 
 // character_check_1.c
 bool			is_backslash(char c);

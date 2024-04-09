@@ -6,7 +6,7 @@
 /*   By: ychng <ychng@student.42kl.edu.my>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/02 17:36:42 by ychng             #+#    #+#             */
-/*   Updated: 2024/04/06 00:45:47 by ychng            ###   ########.fr       */
+/*   Updated: 2024/04/09 14:12:12 by ychng            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ char	*expand_quotes(char *subtoken, int subtokenlen)
 	escaped = false;
 	in_singquote = false;
 	in_doubquote = false;
-	result = alloc_result(subtoken); 
+	result = alloc_result(subtoken);
 	start = result;
 	while (*subtoken)
 	{

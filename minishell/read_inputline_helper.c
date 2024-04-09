@@ -6,7 +6,7 @@
 /*   By: ychng <ychng@student.42kl.edu.my>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/25 01:20:21 by ychng             #+#    #+#             */
-/*   Updated: 2024/04/06 04:34:03 by ychng            ###   ########.fr       */
+/*   Updated: 2024/04/09 14:14:07 by ychng            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,9 +26,9 @@ char	*closequotes(char *input, char **envp)
 			free(input);
 			exit(-1);
 		}
-		if (global_sig == SIGINT)
+		if (g_sig == SIGINT)
 		{
-			global_sig = 0;
+			g_sig = 0;
 			update_exit_status(envp, 130);
 		}
 		joininput = format_joininput(joininput);
@@ -52,9 +52,9 @@ char	*closebrackets(char *input, char **envp)
 			free(input);
 			exit(-1);
 		}
-		if (global_sig == SIGINT)
+		if (g_sig == SIGINT)
 		{
-			global_sig = 0;
+			g_sig = 0;
 			update_exit_status(envp, 130);
 		}
 		triminput = ft_strtrim(input, "\n");
@@ -82,9 +82,9 @@ char	*closelogicalops(char *input, char **envp)
 			free(input);
 			exit(-1);
 		}
-		if (global_sig == SIGINT)
+		if (g_sig == SIGINT)
 		{
-			global_sig = 0;
+			g_sig = 0;
 			update_exit_status(envp, 130);
 		}
 		if (*joininput != '\0')
