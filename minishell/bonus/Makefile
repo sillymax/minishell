@@ -79,7 +79,7 @@ SRCS := global.c \
 		evaluate_tree_utils_9.c \
 		evaluate_tree.c \
 		free_list.c \
-		minishell.c
+		minishell_bonus.c
 
 BUILTINS_SRCS := blt_echo_utils.c \
 				 blt_echo.c \
