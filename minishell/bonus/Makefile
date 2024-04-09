@@ -1,11 +1,11 @@
 # Makefile for minishell
 
 # Program name
-NAME := minishell
+NAME := minishell_bonus
 
 # Directory paths
-SYS_HEADERS_PATH := ../
-LIBFT_PATH := ../libft/
+SYS_HEADERS_PATH := ../../
+LIBFT_PATH := ../../libft/
 OBJS_PATH := ./objs/
 BUILTINS_PATH := ./builtins/
 HEREDOCS_PATH := ./heredocs/

@@ -2,6 +2,7 @@
 
 # Program name
 NAME := minishell
+BONUS_NAME := minishell_bonus
 
 # Directory paths
 SYS_HEADERS_PATH := ../
@@ -9,6 +10,7 @@ LIBFT_PATH := ../libft/
 OBJS_PATH := ./objs/
 BUILTINS_PATH := ./builtins/
 HEREDOCS_PATH := ./heredocs/
+BONUS_PATH := ./bonus/
 
 # Source files
 SRCS := global.c \
@@ -107,6 +109,7 @@ TMPS_TXT := $(wildcard $(HEREDOCS_PATH)*.txt);
 
 # Run the make tool in another directory
 LIBFT_MAKE := $(MAKE) -C$(LIBFT_PATH)
+BONUS_MAKE := $(MAKE) -C$(BONUS_PATH)
 
 # Compiler and flags
 CC := cc
@@ -130,6 +133,7 @@ all: $(NAME)
 # Rule to build program
 $(NAME): $(OBJS)
 	@$(LIBFT_MAKE) re
+	@$(RM) $(RMFLAGS) $(BONUS_NAME)
 	@$(CC) $(CFLAGS) $(OBJS) $(LDFLAGS) $(LDLIBS) -o $(NAME)
 
 # Pattern rule to compile .c files into .o files
@@ -139,6 +143,12 @@ $(OBJS_PATH)%.o: %.c
 $(OBJS_PATH)%.o: $(BUILTINS_PATH)%.c
 	@$(CC) $(CFLAGS) $(INCLUDE_SYS_HEADERS) $(INCLUDE_LIBFT) -c $< -o $@
 
+# Bonus target
+bonus: fclean
+	@$(BONUS_MAKE)
+	@mv $(BONUS_PATH)$(BONUS_NAME) ./
+	@$(BONUS_MAKE) fclean
+
 # Remove all object files
 clean:
 	@$(LIBFT_MAKE) clean
@@ -147,7 +157,7 @@ clean:
 # Remove all generated files
 fclean: clean
 	@$(LIBFT_MAKE) fclean
-	@$(RM) $(RMFLAGS) $(NAME)
+	@$(RM) $(RMFLAGS) $(NAME) $(BONUS_NAME)
 
 # Rebuild the program
 re: fclean all
