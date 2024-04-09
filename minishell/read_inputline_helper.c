@@ -6,7 +6,7 @@
 /*   By: ychng <ychng@student.42kl.edu.my>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/25 01:20:21 by ychng             #+#    #+#             */
-/*   Updated: 2024/04/09 16:21:58 by ychng            ###   ########.fr       */
+/*   Updated: 2024/04/10 01:09:36 by ychng            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@ char	*closequotes(char *input, char **envp)
 		{
 			printf("syntax error: unexpected end of file\n");
 			free(input);
+			free_double_array(envp);
 			exit(-1);
 		}
 		if (g_sig == SIGINT)
@@ -64,6 +65,7 @@ char	*closebrackets(char *input, char **envp)
 		{
 			printf("syntax error: unexpected end of file\n");
 			free(input);
+			free_double_array(envp);
 			exit(-1);
 		}
 		if (g_sig == SIGINT)
@@ -87,6 +89,7 @@ char	*closelogicalops(char *input, char **envp)
 		{
 			printf("syntax error: unexpected end of file\n");
 			free(input);
+			free_double_array(envp);
 			exit(-1);
 		}
 		if (g_sig == SIGINT)
