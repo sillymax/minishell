@@ -6,7 +6,7 @@
 /*   By: ychng <ychng@student.42kl.edu.my>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/25 01:20:21 by ychng             #+#    #+#             */
-/*   Updated: 2024/04/09 15:01:24 by ychng            ###   ########.fr       */
+/*   Updated: 2024/04/09 16:21:58 by ychng            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,6 @@ static char	*process_input(char *input, char *joininput, char **envp)
 char	*closebrackets(char *input, char **envp)
 {
 	char	*joininput;
-	char	*triminput;
 
 	if (has_openbrackets(input) == true)
 	{
