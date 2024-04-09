@@ -6,7 +6,7 @@
 /*   By: ychng <ychng@student.42kl.edu.my>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/29 15:50:22 by ychng             #+#    #+#             */
-/*   Updated: 2024/04/10 00:54:59 by ychng            ###   ########.fr       */
+/*   Updated: 2024/04/10 01:17:53 by ychng            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,11 +19,11 @@ void	init_val(bool *escaped, bool *inquote, char *quote_type)
 	*quote_type = '\0';
 }
 
-bool	handle_redirection(char *token, int *openredir)
+bool	handle_redirection(char **token, int *openredir)
 {
-	if ((*openredir == 0) && is_redirection_n(token))
+	if ((*openredir == 0) && is_redirection_n(*token))
 	{
-		token += redirlen(token);
+		*token += redirlen(*token);
 		(*openredir)++;
 		return (true);
 	}

@@ -6,7 +6,7 @@
 /*   By: ychng <ychng@student.42kl.edu.my>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/20 16:55:40 by ychng             #+#    #+#             */
-/*   Updated: 2024/04/10 01:00:16 by ychng            ###   ########.fr       */
+/*   Updated: 2024/04/10 01:18:08 by ychng            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -211,7 +211,7 @@ bool			has_noerror(char *input);
 
 // read_inputline_utils_2.c
 void        	init_val(bool *escaped, bool *inquote, char *quote_type);
-bool        	handle_redirection(char *token, int *openredir);
+bool        	handle_redirection(char **token, int *openredir);
 bool        	handle_notvalidname(char *token, int *openredir);
 bool        	check_syntaxerror(char *token, int *openredir);
 

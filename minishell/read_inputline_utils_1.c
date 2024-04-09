@@ -69,7 +69,7 @@ bool	has_redirerr(char *token, int *openredir)
 			toggle_inquote(*token, &inquote, &quote_type);
 		else if (!escaped && !inquote)
 		{
-			if (handle_redirection(token, openredir))
+			if (handle_redirection(&token, openredir))
 				continue ;
 			else if (handle_notvalidname(token, openredir))
 				return (true);
