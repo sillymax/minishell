@@ -6,7 +6,7 @@
 /*   By: ychng <ychng@student.42kl.edu.my>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/20 16:55:40 by ychng             #+#    #+#             */
-/*   Updated: 2024/04/10 13:18:18 by ychng            ###   ########.fr       */
+/*   Updated: 2024/04/10 13:58:10 by ychng            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,8 @@
 # define MINISHELL_H
 
 # include "sys_headers.h"
+# include "readline.h"
+# include "history.h"
 # include "libft.h"
 
 typedef struct s_subtokennode

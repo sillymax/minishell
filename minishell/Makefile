@@ -6,6 +6,7 @@ BONUS_NAME := minishell_bonus
 
 # Directory paths
 SYS_HEADERS_PATH := ../
+READLINE_PATH := ../readline/
 LIBFT_PATH := ../libft/
 OBJS_PATH := ./objs/
 BUILTINS_PATH := ./builtins/
@@ -117,11 +118,12 @@ CFLAGS := -Wall -Werror -Wextra $(if $(FSANITIZE), -fsanitize=$(FSANITIZE))
 
 # Include flags, for the compiler to find additional header files
 INCLUDE_SYS_HEADERS := -I$(SYS_HEADERS_PATH)
+INCLUDE_READLINE := -I$(READLINE_PATH)
 INCLUDE_LIBFT := -I$(LIBFT_PATH)includes/
 
 # Locate, and Link flags, for the compiler to find and link the static library
-LDFLAGS := -L$(LIBFT_PATH)
-LDLIBS := -lft -lreadline
+LDFLAGS := -L$(READLINE_PATH) -L$(LIBFT_PATH)
+LDLIBS := -lreadline -lncurses -lhistory -lft
 
 # Remove command and flags
 RM := rm
@@ -138,10 +140,10 @@ $(NAME): $(OBJS)
 
 # Pattern rule to compile .c files into .o files
 $(OBJS_PATH)%.o: %.c
-	@$(CC) $(CFLAGS) $(INCLUDE_SYS_HEADERS) $(INCLUDE_LIBFT) -c $< -o $@
+	@$(CC) $(CFLAGS) $(INCLUDE_SYS_HEADERS) $(INCLUDE_READLINE) $(INCLUDE_LIBFT) -c $< -o $@
 
 $(OBJS_PATH)%.o: $(BUILTINS_PATH)%.c
-	@$(CC) $(CFLAGS) $(INCLUDE_SYS_HEADERS) $(INCLUDE_LIBFT) -c $< -o $@
+	@$(CC) $(CFLAGS) $(INCLUDE_SYS_HEADERS) $(INCLUDE_READLINE) $(INCLUDE_LIBFT) -c $< -o $@
 
 # Bonus target
 bonus: fclean

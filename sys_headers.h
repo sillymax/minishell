@@ -6,7 +6,7 @@
 /*   By: ychng <ychng@student.42kl.edu.my>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/23 18:05:43 by ychng             #+#    #+#             */
-/*   Updated: 2024/04/06 01:19:55 by ychng            ###   ########.fr       */
+/*   Updated: 2024/04/10 13:57:44 by ychng            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,8 +22,8 @@
 # include <sys/wait.h>
 # include <sys/stat.h>
 # include <dirent.h>
-# include <readline/readline.h>
-# include <readline/history.h>
+// # include <readline/readline.h>
+// # include <readline/history.h>
 # include <signal.h>
 
 #endif
