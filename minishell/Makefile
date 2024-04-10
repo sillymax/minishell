@@ -15,6 +15,7 @@ BONUS_PATH := ./bonus/
 
 # Source files
 SRCS := global.c \
+		signal.c \
 		character_check_1.c \
 		character_check_2.c \
 		character_check_3.c \

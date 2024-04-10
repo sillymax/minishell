@@ -6,7 +6,7 @@
 /*   By: ychng <ychng@student.42kl.edu.my>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/31 04:51:03 by ychng             #+#    #+#             */
-/*   Updated: 2024/04/09 16:26:05 by ychng            ###   ########.fr       */
+/*   Updated: 2024/04/10 14:47:58 by ychng            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,12 @@ void	restore_originalfd(int origstdin, int origstdout)
 	close(origstdin);
 	dup2(origstdout, STDOUT_FILENO);
 	close(origstdout);
+}
+
+void	manage_signal(void)
+{
+	signal(SIGINT, sigint_handler);
+	signal(SIGQUIT, SIG_IGN);
 }
 
 pid_t	create_fork(void)

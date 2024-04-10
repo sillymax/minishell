@@ -6,7 +6,7 @@
 /*   By: ychng <ychng@student.42kl.edu.my>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/10 01:32:44 by ychng             #+#    #+#             */
-/*   Updated: 2024/04/10 14:24:33 by ychng            ###   ########.fr       */
+/*   Updated: 2024/04/10 14:46:06 by ychng            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,6 +53,9 @@ typedef struct s_treenode
 }	t_treenode;
 
 extern int	g_sig;
+
+// signal.c
+void			sigint_handler(int sig);
 
 // character_check_1.c
 bool			is_backslash(char c);
@@ -384,6 +387,7 @@ int				get_redirfd(char ***envp, int *infilefd, int *outfilefd, \
 							t_subtokenlist **currcmd);
 void			init_origio(int origio[]);
 void			restore_originalfd(int origstdin, int origstdout);
+void			manage_signal(void);
 pid_t			create_fork(void);
 
 // evaluate_tree_utils_4.c

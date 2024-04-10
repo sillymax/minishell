@@ -6,7 +6,7 @@
 /*   By: ychng <ychng@student.42kl.edu.my>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/31 04:51:00 by ychng             #+#    #+#             */
-/*   Updated: 2024/04/09 16:27:10 by ychng            ###   ########.fr       */
+/*   Updated: 2024/04/10 14:48:54 by ychng            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,7 @@ void	handle_pipecmd(char ***envp, int pipefd[], int prev_pipefd[], \
 	if (outfilefd != 0)
 		close(outfilefd);
 	restore_originalfd(origstdin, origstdout);
+	manage_signal();
 }
 
 void	handle_lastcmd(char ***envp, int prev_pipefd[], \
@@ -62,8 +63,8 @@ void	handle_lastcmd(char ***envp, int prev_pipefd[], \
 			handle_lastcmd_child(prev_pipefd, infilefd);
 			exit(run_cmd(envp, *currcmd));
 		}
-		else
-			handle_lastcmd_parent(prev_pipefd);
+		handle_lastcmd_parent(prev_pipefd);
 	}
 	restore_originalfd(origio[0], origio[1]);
+	manage_signal();
 }

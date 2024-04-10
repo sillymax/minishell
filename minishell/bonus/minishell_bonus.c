@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   minishell.c                                        :+:      :+:    :+:   */
+/*   minishell_bonus.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ychng <ychng@student.42kl.edu.my>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/17 17:56:25 by ychng             #+#    #+#             */
-/*   Updated: 2024/04/10 01:47:54 by ychng            ###   ########.fr       */
+/*   Updated: 2024/04/10 14:40:22 by ychng            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,23 +60,6 @@ void	free_tree(t_treenode *root)
 	free_tree(root->right);
 	free_tokennode(root->token);
 	free(root);
-}
-
-// I can't find the solution for ctrl+c
-// if i add this line i get weird double prompt
-// rl_redisplay(); main> main>
-// if I remove it I get normal prompt
-// But i have to interact with any keys for it to appear
-// I choose the latter one
-void	sigint_handler(int sig)
-{
-	if (sig == SIGINT)
-	{
-		g_sig = sig;
-		printf("\n");
-		rl_replace_line("", 0);
-		rl_on_new_line();
-	}
 }
 
 int	main(int argc, char **argv, char **envp)
