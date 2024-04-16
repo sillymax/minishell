@@ -6,7 +6,7 @@
 /*   By: ychng <ychng@student.42kl.edu.my>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/02 01:19:34 by ychng             #+#    #+#             */
-/*   Updated: 2024/04/09 14:14:07 by ychng            ###   ########.fr       */
+/*   Updated: 2024/04/16 15:14:15 by ychng            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ static void	read_content(t_subtokenlist *currcmd, int tmpfd, char **envp)
 	input = readline("docs> ");
 	while (g_sig == 0)
 	{
-		if (!ft_strncmp(input, name, ft_strlen(input)))
+		if (!ft_strncmp(input, name, ft_strlen(name) - 1))
 			break ;
 		input = expand_env(input, envp);
 		write(tmpfd, input, ft_strlen(input));
